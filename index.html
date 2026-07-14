@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ysa-on-designs — UI/UX Designer &amp; Systems Analyst</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --mat-dark:#193226;
+    --mat-mid:#234436;
+    --mat-line:rgba(240,233,216,0.08);
+    --mat-line-strong:rgba(240,233,216,0.16);
+    --cream:#F1EADA;
+    --cream-dim:#D9CFB6;
+    --ink:#152019;
+    --blade:#E2622B;
+    --blade-dim:#c9531f;
+    --ruler-yellow:#E8C547;
+    --gap:clamp(1.2rem, 4vw, 3rem);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:
+      repeating-linear-gradient(0deg, var(--mat-line) 0 1px, transparent 1px 40px),
+      repeating-linear-gradient(90deg, var(--mat-line) 0 1px, transparent 1px 40px),
+      repeating-linear-gradient(0deg, var(--mat-line-strong) 0 1px, transparent 1px 200px),
+      repeating-linear-gradient(90deg, var(--mat-line-strong) 0 1px, transparent 1px 200px),
+      var(--mat-dark);
+    color:var(--cream);
+    font-family:'Inter', sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:'Space Grotesk', sans-serif; letter-spacing:-0.01em;}
+  .mono{font-family:'JetBrains Mono', monospace;}
+  a{color:inherit;}
+  ::selection{background:var(--blade); color:var(--cream);}
+
+  /* ruler edges */
+  .ruler-top, .ruler-left{position:fixed; z-index:50; color:var(--cream-dim); font-size:10px; opacity:.55; pointer-events:none;}
+  .ruler-top{top:0; left:0; right:0; height:22px; display:flex; align-items:flex-end; background:linear-gradient(var(--mat-dark), transparent);}
+  .ruler-top span{flex:0 0 200px; border-left:1px solid var(--mat-line-strong); padding-left:4px;}
+  .ruler-left{top:0; bottom:0; left:0; width:22px; writing-mode:vertical-rl;}
+  @media (max-width:700px){.ruler-top,.ruler-left{display:none;}}
+
+  nav{
+    position:sticky; top:0; z-index:40;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:1.1rem var(--gap);
+    background:rgba(25,50,38,0.85); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--mat-line-strong);
+  }
+  nav .brand{font-weight:700; font-size:1.05rem;}
+  nav .brand .dot{color:var(--blade);}
+  nav ul{list-style:none; display:flex; gap:1.6rem; font-size:.85rem;}
+  nav ul a{text-decoration:none; opacity:.8; transition:opacity .2s;}
+  nav ul a:hover{opacity:1; color:var(--ruler-yellow);}
+  nav .resume-btn{
+    font-size:.78rem; padding:.5rem .9rem; border:1px solid var(--cream-dim);
+    border-radius:2px; text-decoration:none; opacity:.9;
+  }
+  @media (max-width:700px){ nav ul{display:none;} }
+
+  section{padding:5.5rem var(--gap); max-width:1100px; margin:0 auto;}
+
+  /* HERO */
+  .hero{padding-top:7rem; padding-bottom:6rem; position:relative;}
+  .hero .eyebrow{
+    font-family:'JetBrains Mono', monospace; font-size:.78rem; letter-spacing:.12em;
+    color:var(--ruler-yellow); text-transform:uppercase; margin-bottom:1.2rem;
+    display:inline-flex; align-items:center; gap:.5rem;
+  }
+  .hero .eyebrow::before{content:''; width:22px; height:1px; background:var(--ruler-yellow);}
+  .hero h1{font-size:clamp(2.4rem, 6vw, 4.6rem); line-height:1.02; font-weight:700; max-width:16ch;}
+  .hero h1 .cut{color:var(--blade);}
+  .hero p.tagline{
+    margin-top:1.4rem; font-size:clamp(1rem,2vw,1.2rem); color:var(--cream-dim); max-width:52ch;
+  }
+  .hero .actions{display:flex; gap:1rem; margin-top:2.4rem; flex-wrap:wrap;}
+  .btn{
+    font-family:'JetBrains Mono', monospace; font-size:.82rem; padding:.85rem 1.4rem;
+    border-radius:2px; text-decoration:none; display:inline-flex; align-items:center; gap:.5rem;
+    transition:transform .15s ease, background .2s ease;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn-primary{background:var(--blade); color:var(--cream);}
+  .btn-primary:hover{background:var(--blade-dim);}
+  .btn-outline{border:1px solid var(--cream-dim); color:var(--cream);}
+
+  /* measurement strip */
+  .strip{
+    margin-top:4rem; display:flex; gap:0; border-top:1px dashed var(--mat-line-strong);
+    border-bottom:1px dashed var(--mat-line-strong); flex-wrap:wrap;
+  }
+  .strip div{flex:1 1 160px; padding:1.1rem 1.4rem; border-left:1px dashed var(--mat-line-strong);}
+  .strip div:first-child{border-left:none;}
+  .strip .num{font-family:'JetBrains Mono',monospace; color:var(--ruler-yellow); font-size:1.5rem; font-weight:500;}
+  .strip .lbl{font-size:.78rem; color:var(--cream-dim); margin-top:.2rem;}
+
+  /* SECTION LABELS */
+  .section-head{display:flex; align-items:baseline; gap:1rem; margin-bottom:2.6rem;}
+  .section-head .idx{font-family:'JetBrains Mono',monospace; color:var(--blade); font-size:.85rem;}
+  .section-head h2{font-size:clamp(1.6rem,3.4vw,2.2rem);}
+  .section-head::after{content:''; flex:1; height:1px; background:var(--mat-line-strong);}
+
+  /* ABOUT */
+  .about-grid{display:grid; grid-template-columns:1.3fr 1fr; gap:3rem;}
+  .about-grid p{color:var(--cream-dim); font-size:1rem;}
+  .about-grid p + p{margin-top:1rem;}
+  .fact-card{
+    background:var(--mat-mid); border:1px solid var(--mat-line-strong); border-radius:4px;
+    padding:1.4rem 1.5rem;
+  }
+  .fact-card h3{font-size:.95rem; color:var(--ruler-yellow); margin-bottom:.7rem; font-family:'JetBrains Mono',monospace; font-weight:400;}
+  .fact-card ul{list-style:none; font-size:.9rem; color:var(--cream-dim);}
+  .fact-card li{padding:.3rem 0; border-bottom:1px dashed var(--mat-line);}
+  .fact-card li:last-child{border-bottom:none;}
+  @media (max-width:800px){.about-grid{grid-template-columns:1fr;}}
+
+  /* SKILLS */
+  .pegboard{display:flex; flex-wrap:wrap; gap:.6rem;}
+  .peg{
+    font-family:'JetBrains Mono',monospace; font-size:.82rem; padding:.55rem 1rem;
+    background:var(--mat-mid); border:1px solid var(--mat-line-strong); border-radius:20px;
+    color:var(--cream-dim);
+  }
+  .peg.accent{border-color:var(--ruler-yellow); color:var(--ruler-yellow);}
+
+  /* PROJECTS */
+  .projects{display:grid; grid-template-columns:1fr 1fr; gap:1.8rem;}
+  @media (max-width:800px){.projects{grid-template-columns:1fr;}}
+  .card{
+    background:var(--cream); color:var(--ink); border-radius:6px; overflow:hidden;
+    box-shadow:0 18px 40px rgba(0,0,0,0.28);
+    transform:rotate(var(--rot,0deg));
+    transition:transform .25s ease, box-shadow .25s ease;
+    display:flex; flex-direction:column;
+  }
+  .card:nth-child(1){--rot:-0.6deg;}
+  .card:nth-child(2){--rot:0.5deg;}
+  .card:hover{transform:rotate(0deg) translateY(-6px); box-shadow:0 26px 55px rgba(0,0,0,0.35);}
+  .card .tape{
+    position:absolute; margin:14px 0 0 24px; width:70px; height:22px;
+    background:rgba(232,197,71,0.85); opacity:.9; transform:rotate(-3deg);
+  }
+  .card-body{padding:1.6rem 1.6rem 1.4rem;}
+  .card .tag{
+    font-family:'JetBrains Mono',monospace; font-size:.7rem; text-transform:uppercase;
+    letter-spacing:.08em; color:var(--blade-dim); margin-bottom:.6rem; display:block;
+  }
+  .card h3{font-size:1.25rem; margin-bottom:.5rem;}
+  .card p.role{font-size:.85rem; color:#5a5142; margin-bottom:.8rem; font-family:'JetBrains Mono',monospace;}
+  .card p.desc{font-size:.92rem; color:#3a352b;}
+  .card .tools{display:flex; flex-wrap:wrap; gap:.4rem; margin-top:1rem;}
+  .card .tools span{
+    font-size:.72rem; padding:.25rem .6rem; background:rgba(21,32,25,0.07); border-radius:12px;
+  }
+  .card-foot{
+    margin-top:auto; padding:1rem 1.6rem; border-top:1px dashed rgba(21,32,25,0.15);
+    display:flex; justify-content:space-between; align-items:center; font-size:.8rem;
+  }
+  .card-foot a{text-decoration:none; font-family:'JetBrains Mono',monospace; color:var(--blade-dim); font-weight:500;}
+
+  /* EXPERIENCE TIMELINE */
+  .timeline{border-left:1px dashed var(--mat-line-strong); padding-left:2rem; margin-left:.5rem;}
+  .t-item{position:relative; padding-bottom:2.6rem;}
+  .t-item:last-child{padding-bottom:0;}
+  .t-item::before{
+    content:''; position:absolute; left:-2.42rem; top:.35rem; width:10px; height:10px;
+    border-radius:50%; background:var(--ruler-yellow); box-shadow:0 0 0 4px var(--mat-dark);
+  }
+  .t-item .date{font-family:'JetBrains Mono',monospace; font-size:.75rem; color:var(--ruler-yellow);}
+  .t-item h3{font-size:1.1rem; margin-top:.3rem;}
+  .t-item .org{font-size:.85rem; color:var(--cream-dim); margin-bottom:.6rem;}
+  .t-item ul{padding-left:1.1rem; font-size:.9rem; color:var(--cream-dim);}
+  .t-item li{margin-bottom:.3rem;}
+
+  /* CONTACT */
+  footer{
+    padding:5rem var(--gap) 3rem; text-align:center; border-top:1px dashed var(--mat-line-strong);
+  }
+  footer h2{font-size:clamp(1.8rem,4vw,2.8rem); max-width:18ch; margin:0 auto 1.2rem;}
+  footer p{color:var(--cream-dim); max-width:44ch; margin:0 auto 2rem;}
+  .contact-links{display:flex; justify-content:center; gap:1.2rem; flex-wrap:wrap;}
+  footer .bottom{margin-top:4rem; font-size:.75rem; color:var(--cream-dim); font-family:'JetBrains Mono',monospace; opacity:.6;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<div class="ruler-top mono">
+  <span>0</span><span>200</span><span>400</span><span>600</span><span>800</span><span>1000</span><span>1200</span>
+</div>
+<div class="ruler-left mono">MEASURE TWICE · CUT ONCE</div>
+
+<nav>
+  <div class="brand">ysa-on-designs<span class="dot">.</span></div>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a class="resume-btn" href="resume.pdf" target="_blank">Résumé ↓</a>
+</nav>
+
+<section class="hero">
+  <span class="eyebrow">Information Systems · Sophomore</span>
+  <h1>Designing clear <span class="cut">systems</span>, one cut at a time.</h1>
+  <p class="tagline">UI/UX Designer &amp; Systems Analyst translating messy requirements into wireframes, process flows, and interfaces people actually understand.</p>
+  <div class="actions">
+    <a class="btn btn-primary" href="#projects">View Projects →</a>
+    <a class="btn btn-outline" href="#contact">Get in Touch</a>
+  </div>
+
+  <div class="strip mono">
+    <div><div class="num">2</div><div class="lbl">Case study projects</div></div>
+    <div><div class="num">5</div><div class="lbl">Departments coordinated</div></div>
+    <div><div class="num">6</div><div class="lbl">Events documented</div></div>
+    <div><div class="num">2028</div><div class="lbl">Expected graduation</div></div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="section-head"><span class="idx mono">01</span><h2>About</h2></div>
+  <div class="about-grid">
+    <div>
+      <p>I'm an Information Systems student at De La Salle-College of Saint Benilde, specializing in UI/UX design and systems &amp; design analysis — the work of turning a vague problem into a diagram, a wireframe, and eventually something a user can actually navigate.</p>
+      <p>Outside the classroom, I lead operations for Developers Society Benilde as Chief Operations Officer, coordinating five departments and keeping documentation, timelines, and communication consistent across every event we run. That operational discipline is what I bring into every design and analysis project — clarity first, decoration second.</p>
+    </div>
+    <div class="fact-card">
+      <h3>// QUICK FACTS</h3>
+      <ul>
+        <li>BS Information Systems, Software Engineering track</li>
+        <li>Dean's Lister</li>
+        <li>Chief Operations Officer, Developers Society Benilde</li>
+        <li>Figma &amp; Canva for design work</li>
+        <li>Based in Manila, Philippines</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="section-head"><span class="idx mono">02</span><h2>Skills</h2></div>
+  <div class="pegboard">
+    <span class="peg accent">Figma — Wireframes &amp; Prototyping</span>
+    <span class="peg accent">UI/UX Design</span>
+    <span class="peg accent">Systems Analysis</span>
+    <span class="peg">Process Mapping</span>
+    <span class="peg">Canva</span>
+    <span class="peg">C#</span>
+    <span class="peg">C++</span>
+    <span class="peg">Python</span>
+    <span class="peg">SQL</span>
+    <span class="peg">Kotlin</span>
+    <span class="peg">Google Workspace</span>
+    <span class="peg">Project Coordination</span>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="section-head"><span class="idx mono">03</span><h2>Projects</h2></div>
+  <div class="projects">
+
+    <div class="card">
+      <div class="card-body">
+        <span class="tag">Systems Analysis &amp; Design</span>
+        <h3>IponTayo</h3>
+        <p class="role">UI/UX Designer — Nov 2025</p>
+        <p class="desc">An AI-integrated personal finance app addressing low financial literacy in the Philippines. Designed the high-fidelity prototype covering an accurate net-pay calculator (SSS, PhilHealth, Pag-IBIG, BIR TRAIN tax), spending pattern warnings, and long-term goal projection — built on top of full DFDs, a use case diagram, and an ERD developed for the course.</p>
+        <div class="tools"><span>Figma</span><span>Use Case Diagram</span><span>DFD</span><span>ERD</span></div>
+      </div>
+      <div class="card-foot">
+        <span>De La Salle-CSB · SYSANDE</span>
+        <a href="#">Case Study →</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <span class="tag">Information Management</span>
+        <h3>MyAlaga</h3>
+        <p class="role">UI/UX Designer — Mar 2026</p>
+        <p class="desc">A pet appointment management hub replacing fragmented Facebook messages and paper booklets with real-time booking. Designed the wireframes for owner sign-up, pet profiling, service booking, and a staff-side dashboard for tracking daily appointments and customer status.</p>
+        <div class="tools"><span>Figma</span><span>Wireframing</span><span>SQL Schema</span></div>
+      </div>
+      <div class="card-foot">
+        <span>De La Salle-CSB · ISINFOM</span>
+        <a href="#">Case Study →</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="experience">
+  <div class="section-head"><span class="idx mono">04</span><h2>Experience</h2></div>
+  <div class="timeline">
+    <div class="t-item">
+      <div class="date mono">JAN 2026 — PRESENT</div>
+      <h3>Chief Operations Officer</h3>
+      <div class="org">Developers Society Benilde</div>
+      <ul>
+        <li>Coordinate efforts across 5 departments on concurrent projects, using Google Workspace to keep teams aligned</li>
+        <li>Handle post-documentation reports for concluded events, covering around 6 events in the past few months</li>
+        <li>Coordinate with school administrators and the IS Department Chairperson to promote events via department and university-wide emails, extending reach beyond the org</li>
+      </ul>
+    </div>
+    <div class="t-item">
+      <div class="date mono">AUG 2025 — DEC 2025</div>
+      <h3>Chief Operations Officer Understudy</h3>
+      <div class="org">Developers Society Benilde</div>
+      <ul>
+        <li>Worked alongside outgoing officers to manage org events as part of the leadership transition, learning how projects were coordinated across 5 departments</li>
+        <li>Shadowed the Executive Board to learn the responsibilities and workflows of the Chief Operations Officer role</li>
+      </ul>
+    </div>
+    <div class="t-item">
+      <div class="date mono">MAR 2025 — AUG 2025</div>
+      <h3>Internal Relations Associate</h3>
+      <div class="org">Association of Information Management</div>
+      <ul>
+        <li>Managed pre-event communications for 100+ recipients through email blasts, with post-event outreach scaled per event</li>
+        <li>Handled post-documentation reports and created email marketing materials for internal communications</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <span class="eyebrow mono" style="justify-content:center;">// GET IN TOUCH</span>
+  <h2>Let's build something worth measuring twice.</h2>
+  <p>Open to UI/UX design and systems analyst internships. Feel free to reach out — I usually reply within a day.</p>
+  <div class="contact-links">
+    <a class="btn btn-outline" href="mailto:your.email@gmail.com">Email</a>
+    <a class="btn btn-outline" href="https://linkedin.com/in/your-handle" target="_blank">LinkedIn</a>
+    <a class="btn btn-outline" href="https://github.com/your-handle" target="_blank">GitHub</a>
+  </div>
+  <div class="bottom">BUILT ON A CUTTING MAT · MANILA, PH</div>
+</footer>
+
+</body>
+</html>

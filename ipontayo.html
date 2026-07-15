@@ -46,6 +46,12 @@
   main{max-width:980px; margin:0 auto; padding:0 var(--gap) 6rem;}
 
   .cs-hero{padding:4.5rem 0 3rem;}
+  .cs-hero .title-row{display:flex; align-items:center; gap:1.1rem; flex-wrap:wrap;}
+  .cs-hero .app-icon{
+    width:64px; height:64px; border-radius:16px; object-fit:cover;
+    border:1px solid var(--mat-line-strong); box-shadow:0 10px 24px rgba(0,0,0,0.35);
+    flex-shrink:0;
+  }
   .cs-hero .eyebrow{
     font-family:'JetBrains Mono', monospace; font-size:.78rem; letter-spacing:.12em; color:var(--ruler-yellow);
     text-transform:uppercase; margin-bottom:1.1rem; display:inline-flex; align-items:center; gap:.5rem;
@@ -71,14 +77,12 @@
   section p{color:var(--cream-dim); font-size:.98rem; max-width:70ch;}
   section p + p{margin-top:.9rem;}
 
-  /* Cropped Figma embed: container matches a phone's aspect ratio so Figma
-     doesn't letterbox with black bars on the sides, then the iframe is
-     scaled up slightly and centered to crop out any remaining chrome. */
+ 
   .embed-frame{
     margin:1.5rem auto 0;
     width:100%;
-    max-width:360px;
-    aspect-ratio:390 / 844;
+    max-width:380px;
+    aspect-ratio:390 / 860;
     overflow:hidden;
     position:relative;
     border-radius:48px;
@@ -90,7 +94,7 @@
     position:absolute;
     top:52%;
     left:50%;
-    width:132%;
+    width:134%;
     height:134%;
     transform:translate(-50%, -50%);
     border:none;
@@ -102,9 +106,14 @@
 
   .shot-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:1rem; margin-top:1.5rem;}
   .shot{
-    aspect-ratio:9/16; background:var(--mat-mid); border:1px solid var(--mat-line-strong); border-radius:8px;
-    display:flex; align-items:center; justify-content:center; color:var(--cream-dim); font-size:.75rem;
-    font-family:'JetBrains Mono',monospace; text-align:center; padding:1rem;
+    aspect-ratio:9/16; background:var(--mat-mid); border:1px solid var(--mat-line-strong); border-radius:10px;
+    overflow:hidden; position:relative;
+  }
+  .shot img{width:100%; height:100%; object-fit:cover; display:block;}
+  .shot .cap{
+    position:absolute; left:0; right:0; bottom:0; padding:.5rem .6rem;
+    background:linear-gradient(transparent, rgba(0,0,0,0.65));
+    font-family:'JetBrains Mono',monospace; font-size:.68rem; color:var(--cream);
   }
   @media (max-width:700px){.shot-grid{grid-template-columns:repeat(2,1fr);}}
 
@@ -142,7 +151,10 @@
 <main>
   <div class="cs-hero">
     <span class="eyebrow">Case Study · Systems Analysis and Design</span>
-    <h1>IponTayo</h1>
+    <div class="title-row">
+      <img class="app-icon" src="screens/Logo_Only_-Black_ver.jpg" alt="IponTayo app logo">
+      <h1>IponTayo</h1>
+    </div>
     <p class="sub">An AI-integrated personal finance app addressing low financial literacy in the Philippines — designed to make net-pay calculation, budgeting, and localized saving habits like Paluwagan and Padala easy to track in one place.</p>
 
     <div class="meta-strip mono">
@@ -165,18 +177,18 @@
     <div class="embed-frame">
       <iframe src="https://embed.figma.com/proto/jekVAA2nGogh3bkOQwFzJR/SYSANDE_GRP8?node-id=163-780&p=f&viewport=442%2C226%2C0.11&scaling=scale-down&content-scaling=fixed&starting-point-node-id=163%3A780&page-id=0%3A1&embed-host=share" allowfullscreen></iframe>
     </div>
-    <!-- <p class="embed-note">// Tap directly on screens inside the phone to navigate — hotspots still work even with Figma's toolbar cropped out.</p> -->
   </section>
 
   <section>
     <div class="section-head"><span class="idx mono">03</span><h2>Key Screens</h2></div>
-    <p>Five core screens make up the hi-fidelity prototype, covering the full flow from net pay calculation to long-term goal tracking.</p>
+    <p>Six core screens make up the hi-fidelity prototype, covering the full flow from net pay calculation to long-term financial roadmapping.</p>
     <div class="shot-grid">
-      <div class="shot">Dashboard<br>(screenshot)</div>
-      <div class="shot">Net Pay<br>Calculator</div>
-      <div class="shot">Goals &amp;<br>EF Setter</div>
-      <div class="shot">Projections &amp;<br>Tracking</div>
-      <div class="shot">Profile &amp;<br>Settings</div>
+      <div class="shot"><img src="screens/Dashboard.png" alt="Dashboard screen"><span class="cap">Dashboard</span></div>
+      <div class="shot"><img src="screens/Goals.png" alt="Goals and net pay calculator screen"><span class="cap">Goals &amp; Net Pay Calculator</span></div>
+      <div class="shot"><img src="screens/Projections.png" alt="Projections and tracking screen"><span class="cap">Projections &amp; Tracking</span></div>
+      <div class="shot"><img src="screens/AI_Financial_Roadmap.png" alt="Financial roadmap screen"><span class="cap">Financial Roadmap</span></div>
+      <div class="shot"><img src="screens/Guide.png" alt="Financial guide screen"><span class="cap">Financial Guide</span></div>
+      <div class="shot"><img src="screens/Account.png" alt="Profile screen"><span class="cap">Profile</span></div>
     </div>
   </section>
 

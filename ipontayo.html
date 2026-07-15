@@ -71,24 +71,28 @@
   section p{color:var(--cream-dim); font-size:.98rem; max-width:70ch;}
   section p + p{margin-top:.9rem;}
 
-  /* Cropped Figma embed: hides Figma's chrome (expand icon, nav arrows, file name bar),
-     showing just the phone/prototype itself. */
+  /* Cropped Figma embed: container matches a phone's aspect ratio so Figma
+     doesn't letterbox with black bars on the sides, then the iframe is
+     scaled up slightly and centered to crop out any remaining chrome. */
   .embed-frame{
-    margin-top:1.5rem;
-    height:620px;
+    margin:1.5rem auto 0;
+    width:100%;
+    max-width:360px;
+    aspect-ratio:390 / 844;
     overflow:hidden;
     position:relative;
-    border-radius:10px;
+    border-radius:28px;
     border:1px solid var(--mat-line-strong);
     box-shadow:0 20px 45px rgba(0,0,0,0.32);
     background:var(--mat-mid);
   }
   .embed-frame iframe{
     position:absolute;
-    top:-72px;
-    left:0;
-    width:100%;
-    height:calc(100% + 190px);
+    top:50%;
+    left:50%;
+    width:150%;
+    height:150%;
+    transform:translate(-50%, -50%);
     border:none;
     display:block;
   }

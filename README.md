@@ -2,7 +2,7 @@
 
 ![Portfolio thumbnail](assets/thumbnail.png)
 
-My personal portfolio site, showcasing UI/UX design and systems analysis work as an Information Systems student at De La Salle-College of Saint Benilde.
+My personal portfolio site, showcasing UI/UX design & Systems Analysis and Design as an Information Systems student at De La Salle-College of Saint Benilde.
 
 🔗 **Live site:** [ysa-on-designs.github.io/ysa-studio](https://ysa-on-designs.github.io/ysa-studio/)
 

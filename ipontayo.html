@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IponTayo — Case Study | ysa-on-designs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --mat-dark:#193226; --mat-mid:#234436;
+    --mat-line:rgba(240,233,216,0.08); --mat-line-strong:rgba(240,233,216,0.16);
+    --cream:#F1EADA; --cream-dim:#D9CFB6; --ink:#152019;
+    --blade:#E2622B; --blade-dim:#c9531f; --ruler-yellow:#E8C547;
+    --gap:clamp(1.2rem, 4vw, 3rem);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:
+      repeating-linear-gradient(0deg, var(--mat-line) 0 1px, transparent 1px 40px),
+      repeating-linear-gradient(90deg, var(--mat-line) 0 1px, transparent 1px 40px),
+      repeating-linear-gradient(0deg, var(--mat-line-strong) 0 1px, transparent 1px 200px),
+      repeating-linear-gradient(90deg, var(--mat-line-strong) 0 1px, transparent 1px 200px),
+      var(--mat-dark);
+    color:var(--cream); font-family:'Inter', sans-serif; line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:'Space Grotesk', sans-serif; letter-spacing:-0.01em;}
+  .mono{font-family:'JetBrains Mono', monospace;}
+  a{color:inherit;}
+  ::selection{background:var(--blade); color:var(--cream);}
+
+  nav{
+    position:sticky; top:0; z-index:40; display:flex; justify-content:space-between; align-items:center;
+    padding:1.1rem var(--gap); background:rgba(25,50,38,0.85); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--mat-line-strong);
+  }
+  nav .brand{font-weight:700; font-size:1.05rem;}
+  nav .brand .dot{color:var(--blade);}
+  .back-link{
+    font-family:'JetBrains Mono',monospace; font-size:.8rem; text-decoration:none; color:var(--cream-dim);
+    display:flex; align-items:center; gap:.4rem; transition:color .2s;
+  }
+  .back-link:hover{color:var(--ruler-yellow);}
+
+  main{max-width:980px; margin:0 auto; padding:0 var(--gap) 6rem;}
+
+  .cs-hero{padding:4.5rem 0 3rem;}
+  .cs-hero .eyebrow{
+    font-family:'JetBrains Mono', monospace; font-size:.78rem; letter-spacing:.12em; color:var(--ruler-yellow);
+    text-transform:uppercase; margin-bottom:1.1rem; display:inline-flex; align-items:center; gap:.5rem;
+  }
+  .cs-hero .eyebrow::before{content:''; width:22px; height:1px; background:var(--ruler-yellow);}
+  .cs-hero h1{font-size:clamp(2.2rem, 5vw, 3.4rem); max-width:20ch;}
+  .cs-hero p.sub{margin-top:1rem; font-size:1.05rem; color:var(--cream-dim); max-width:60ch;}
+
+  .meta-strip{
+    display:flex; flex-wrap:wrap; gap:0; margin-top:2.5rem;
+    border-top:1px dashed var(--mat-line-strong); border-bottom:1px dashed var(--mat-line-strong);
+  }
+  .meta-strip div{flex:1 1 160px; padding:1rem 1.3rem; border-left:1px dashed var(--mat-line-strong);}
+  .meta-strip div:first-child{border-left:none;}
+  .meta-strip .lbl{font-family:'JetBrains Mono',monospace; font-size:.7rem; color:var(--ruler-yellow); text-transform:uppercase; letter-spacing:.06em;}
+  .meta-strip .val{margin-top:.3rem; font-size:.92rem;}
+
+  section{padding:3.2rem 0;}
+  .section-head{display:flex; align-items:baseline; gap:1rem; margin-bottom:1.6rem;}
+  .section-head .idx{font-family:'JetBrains Mono',monospace; color:var(--blade); font-size:.85rem;}
+  .section-head h2{font-size:clamp(1.3rem,3vw,1.7rem);}
+  .section-head::after{content:''; flex:1; height:1px; background:var(--mat-line-strong);}
+  section p{color:var(--cream-dim); font-size:.98rem; max-width:70ch;}
+  section p + p{margin-top:.9rem;}
+
+  .embed-frame{
+    margin-top:1.5rem; border-radius:6px; overflow:hidden; border:1px solid var(--mat-line-strong);
+    box-shadow:0 20px 45px rgba(0,0,0,0.32); background:var(--mat-mid);
+  }
+  .embed-frame iframe{width:100%; height:600px; display:block; border:none;}
+  .embed-placeholder{
+    height:600px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.8rem;
+    color:var(--cream-dim); text-align:center; padding:2rem;
+  }
+  .embed-placeholder .icon{font-size:2.2rem;}
+  .embed-placeholder code{
+    font-family:'JetBrains Mono',monospace; font-size:.78rem; background:rgba(0,0,0,0.25);
+    padding:.5rem .8rem; border-radius:4px; max-width:90%; overflow-wrap:break-word;
+  }
+
+  .shot-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:1rem; margin-top:1.5rem;}
+  .shot{
+    aspect-ratio:9/16; background:var(--mat-mid); border:1px solid var(--mat-line-strong); border-radius:8px;
+    display:flex; align-items:center; justify-content:center; color:var(--cream-dim); font-size:.75rem;
+    font-family:'JetBrains Mono',monospace; text-align:center; padding:1rem;
+  }
+  @media (max-width:700px){.shot-grid{grid-template-columns:repeat(2,1fr);}}
+
+  .process-list{list-style:none; margin-top:1.4rem; display:grid; gap:1rem;}
+  .process-list li{
+    display:flex; gap:1rem; padding:1rem 1.2rem; background:var(--mat-mid);
+    border:1px solid var(--mat-line-strong); border-radius:6px;
+  }
+  .process-list .step-num{
+    font-family:'JetBrains Mono',monospace; color:var(--ruler-yellow); font-weight:600; flex-shrink:0;
+  }
+  .process-list .step-text h3{font-size:1rem; margin-bottom:.25rem;}
+  .process-list .step-text p{font-size:.9rem; margin:0;}
+
+  .cta-row{display:flex; gap:1rem; margin-top:3rem; flex-wrap:wrap;}
+  .btn{
+    font-family:'JetBrains Mono', monospace; font-size:.82rem; padding:.85rem 1.4rem; border-radius:2px;
+    text-decoration:none; display:inline-flex; align-items:center; gap:.5rem; transition:transform .15s ease, background .2s ease;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn-primary{background:var(--blade); color:var(--cream);}
+  .btn-primary:hover{background:var(--blade-dim);}
+  .btn-outline{border:1px solid var(--cream-dim); color:var(--cream);}
+
+  footer{padding:3rem var(--gap); text-align:center; border-top:1px dashed var(--mat-line-strong); font-size:.75rem; color:var(--cream-dim); font-family:'JetBrains Mono',monospace; opacity:.6;}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="back-link" href="index.html">← Back to Portfolio</a>
+  <div class="brand">ysa-on-designs<span class="dot">.</span></div>
+</nav>
+
+<main>
+  <div class="cs-hero">
+    <span class="eyebrow">Case Study · Systems Analysis and Design</span>
+    <h1>IponTayo</h1>
+    <p class="sub">An AI-integrated personal finance app addressing low financial literacy in the Philippines — designed to make net-pay calculation, budgeting, and localized saving habits like Paluwagan and Padala easy to track in one place.</p>
+
+    <div class="meta-strip mono">
+      <div><div class="lbl">Role</div><div class="val">UI/UX Designer</div></div>
+      <div><div class="lbl">Timeline</div><div class="val">Nov 2025</div></div>
+      <div><div class="lbl">Tools</div><div class="val">Figma</div></div>
+      <div><div class="lbl">Deliverable</div><div class="val">Hi-Fi Prototype</div></div>
+    </div>
+  </div>
+
+  <section>
+    <div class="section-head"><span class="idx mono">01</span><h2>The Problem</h2></div>
+    <p>Only a quarter of Filipinos are confident with basic budgeting, while most financial apps on the market are foreign-made and don't reflect local money habits — things like Paluwagan (community savings), Padala (family remittances), or the specific structure of PH payroll deductions (SSS, PhilHealth, Pag-IBIG, BIR TRAIN tax).</p>
+    <p>IponTayo set out to close that gap: an app that speaks the language of Filipino personal finance instead of asking users to translate their habits into a generic budgeting template.</p>
+  </section>
+
+  <section>
+    <div class="section-head"><span class="idx mono">02</span><h2>Prototype Walkthrough</h2></div>
+    <p>Click through the interactive Figma prototype below.</p>
+    <div class="embed-frame">
+      <!-- Replace this placeholder div with your real Figma <iframe> embed code once you have it.
+           It should look like:
+           <iframe src="https://embed.figma.com/proto/YOUR_FILE_KEY/YOUR_FILE_NAME?embed-host=share" allowfullscreen></iframe>
+      -->
+      <div class="embed-placeholder">
+        <div class="icon">▢</div>
+        <div>Figma prototype embed goes here</div>
+        <code>&lt;iframe src="https://embed.figma.com/proto/...?embed-host=share"&gt;&lt;/iframe&gt;</code>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head"><span class="idx mono">03</span><h2>Key Screens</h2></div>
+    <p>Five core screens make up the hi-fidelity prototype, covering the full flow from net pay calculation to long-term goal tracking.</p>
+    <div class="shot-grid">
+      <div class="shot">Dashboard<br>(screenshot)</div>
+      <div class="shot">Net Pay<br>Calculator</div>
+      <div class="shot">Goals &amp;<br>EF Setter</div>
+      <div class="shot">Projections &amp;<br>Tracking</div>
+      <div class="shot">Profile &amp;<br>Settings</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head"><span class="idx mono">04</span><h2>Process</h2></div>
+    <ul class="process-list">
+      <li><span class="step-num mono">01</span><div class="step-text"><h3>Systems Analysis</h3><p>Worked from the team's SWOT, use case diagram, DFDs, and ERD to understand the actual data and process requirements before opening Figma.</p></div></li>
+      <li><span class="step-num mono">02</span><div class="step-text"><h3>Hi-Fi Design</h3><p>Designed 5 high-fidelity mobile screens covering net pay calculation, budgeting, and goal-tracking interfaces.</p></div></li>
+      <li><span class="step-num mono">03</span><div class="step-text"><h3>Usability Walkthroughs</h3><p>Had 5+ classmates and a professor navigate the prototype live, gathering feedback that shaped the final iteration (e.g., decluttering the dashboard by removing the currency exchange feature).</p></div></li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="section-head"><span class="idx mono">05</span><h2>Outcome</h2></div>
+    <p>The final prototype was approved with minor formatting adjustments only — icon, spacing, and color refinements — with the core flows and feature set validated as-is after the usability walkthroughs.</p>
+  </section>
+
+  <div class="cta-row">
+    <a class="btn btn-primary" href="https://www.figma.com/" target="_blank">Open in Figma →</a>
+    <a class="btn btn-outline" href="index.html">← Back to Portfolio</a>
+  </div>
+</main>
+
+<footer>BUILT ON A CUTTING MAT · MANILA, PH</footer>
+
+</body>
+</html>

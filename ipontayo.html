@@ -106,16 +106,40 @@
 
   .shot-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:1rem; margin-top:1.5rem;}
   .shot{
-    aspect-ratio:9/16; background:var(--mat-mid); border:1px solid var(--mat-line-strong); border-radius:10px;
-    overflow:hidden; position:relative;
+    height:360px;
+    background:var(--mat-mid); border:1px solid var(--mat-line-strong); border-radius:10px;
+    overflow:hidden; position:relative; cursor:pointer;
   }
-  .shot img{width:100%; height:100%; object-fit:cover; display:block;}
+  .shot img{
+    width:100%; height:100%; object-fit:cover; object-position:top center; display:block;
+    transition:transform .35s ease, filter .35s ease;
+  }
+  .shot:hover img{transform:scale(1.06); filter:brightness(1.05);}
   .shot .cap{
-    position:absolute; left:0; right:0; bottom:0; padding:.5rem .6rem;
-    background:linear-gradient(transparent, rgba(0,0,0,0.65));
-    font-family:'JetBrains Mono',monospace; font-size:.68rem; color:var(--cream);
+    position:absolute; left:0; right:0; bottom:0; padding:.7rem .7rem .6rem;
+    background:linear-gradient(transparent, rgba(0,0,0,0.72));
+    font-family:'JetBrains Mono',monospace; font-size:.72rem; color:var(--cream);
+    display:flex; align-items:center; justify-content:space-between; gap:.4rem;
   }
-  @media (max-width:700px){.shot-grid{grid-template-columns:repeat(2,1fr);}}
+  .shot .cap .expand{opacity:.7; font-size:.8rem;}
+  @media (max-width:700px){.shot-grid{grid-template-columns:repeat(2,1fr);} .shot{height:320px;}}
+
+  /* Lightbox */
+  .lightbox{
+    display:none; position:fixed; inset:0; z-index:100;
+    background:rgba(10,18,14,0.92); backdrop-filter:blur(4px);
+    align-items:center; justify-content:center; padding:2rem;
+    flex-direction:column;
+  }
+  .lightbox.open{display:flex;}
+  .lightbox img{max-width:min(420px, 90vw); max-height:78vh; border-radius:20px; box-shadow:0 30px 70px rgba(0,0,0,0.5);}
+  .lightbox .lb-cap{margin-top:1.2rem; font-family:'JetBrains Mono',monospace; font-size:.85rem; color:var(--cream-dim);}
+  .lightbox .lb-close{
+    position:absolute; top:1.5rem; right:1.5rem; width:40px; height:40px; border-radius:50%;
+    border:1px solid var(--mat-line-strong); background:var(--mat-mid); color:var(--cream);
+    font-size:1.2rem; cursor:pointer; display:flex; align-items:center; justify-content:center;
+  }
+  .lightbox .lb-close:hover{border-color:var(--ruler-yellow); color:var(--ruler-yellow);}
 
   .process-list{list-style:none; margin-top:1.4rem; display:grid; gap:1rem;}
   .process-list li{
@@ -181,14 +205,32 @@
 
   <section>
     <div class="section-head"><span class="idx mono">03</span><h2>Key Screens</h2></div>
-    <p>Six core screens make up the hi-fidelity prototype, covering the full flow from net pay calculation to long-term financial roadmapping.</p>
+    <p>Six core screens make up the hi-fidelity prototype, covering the full flow from net pay calculation to long-term financial roadmapping. Tap any screen to view it full-size.</p>
     <div class="shot-grid">
-      <div class="shot"><img src="screens/Dashboard.png" alt="Dashboard screen"><span class="cap">Dashboard</span></div>
-      <div class="shot"><img src="screens/Goals.png" alt="Goals and net pay calculator screen"><span class="cap">Goals &amp; Net Pay Calculator</span></div>
-      <div class="shot"><img src="screens/Projections.png" alt="Projections and tracking screen"><span class="cap">Projections &amp; Tracking</span></div>
-      <div class="shot"><img src="screens/AI_Financial_Roadmap.png" alt="Financial roadmap screen"><span class="cap">Financial Roadmap</span></div>
-      <div class="shot"><img src="screens/Guide.png" alt="Financial guide screen"><span class="cap">Financial Guide</span></div>
-      <div class="shot"><img src="screens/Account.png" alt="Profile screen"><span class="cap">Profile</span></div>
+      <div class="shot" data-full="screens/Dashboard.png" data-cap="Dashboard">
+        <img src="screens/Dashboard.png" alt="Dashboard screen">
+        <span class="cap">Dashboard <span class="expand">⤢</span></span>
+      </div>
+      <div class="shot" data-full="screens/Goals.png" data-cap="Goals & Net Pay Calculator">
+        <img src="screens/Goals.png" alt="Goals and net pay calculator screen">
+        <span class="cap">Goals &amp; Net Pay Calc <span class="expand">⤢</span></span>
+      </div>
+      <div class="shot" data-full="screens/Projections.png" data-cap="Projections & Tracking">
+        <img src="screens/Projections.png" alt="Projections and tracking screen">
+        <span class="cap">Projections &amp; Tracking <span class="expand">⤢</span></span>
+      </div>
+      <div class="shot" data-full="screens/AI_Financial_Roadmap.png" data-cap="Financial Roadmap">
+        <img src="screens/AI_Financial_Roadmap.png" alt="Financial roadmap screen">
+        <span class="cap">Financial Roadmap <span class="expand">⤢</span></span>
+      </div>
+      <div class="shot" data-full="screens/Guide.png" data-cap="Financial Guide">
+        <img src="screens/Guide.png" alt="Financial guide screen">
+        <span class="cap">Financial Guide <span class="expand">⤢</span></span>
+      </div>
+      <div class="shot" data-full="screens/Account.png" data-cap="Profile">
+        <img src="screens/Account.png" alt="Profile screen">
+        <span class="cap">Profile <span class="expand">⤢</span></span>
+      </div>
     </div>
   </section>
 
@@ -213,6 +255,32 @@
 </main>
 
 <footer>BUILT ON A CUTTING MAT · MANILA, PH</footer>
+
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" id="lbClose" aria-label="Close">✕</button>
+  <img id="lbImg" src="" alt="">
+  <div class="lb-cap mono" id="lbCap"></div>
+</div>
+
+<script>
+  const lightbox = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lbImg');
+  const lbCap = document.getElementById('lbCap');
+  const lbClose = document.getElementById('lbClose');
+
+  document.querySelectorAll('.shot').forEach(shot => {
+    shot.addEventListener('click', () => {
+      lbImg.src = shot.dataset.full;
+      lbCap.textContent = shot.dataset.cap;
+      lightbox.classList.add('open');
+    });
+  });
+
+  function closeLightbox(){ lightbox.classList.remove('open'); lbImg.src=''; }
+  lbClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+</script>
 
 </body>
 </html>

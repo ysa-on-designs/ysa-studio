@@ -3,15 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IponTayo — Case Study | Ysa on Designs</title>
+<title>ysa-on-designs — UI/UX Designer &amp; Systems Analyst</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --mat-dark:#193226; --mat-mid:#234436;
-    --mat-line:rgba(240,233,216,0.08); --mat-line-strong:rgba(240,233,216,0.16);
-    --cream:#F1EADA; --cream-dim:#D9CFB6; --ink:#152019;
-    --blade:#E2622B; --blade-dim:#c9531f; --ruler-yellow:#E8C547;
+    --mat-dark:#193226;
+    --mat-mid:#234436;
+    --mat-line:rgba(240,233,216,0.08);
+    --mat-line-strong:rgba(240,233,216,0.16);
+    --cream:#F1EADA;
+    --cream-dim:#D9CFB6;
+    --ink:#152019;
+    --blade:#E2622B;
+    --blade-dim:#c9531f;
+    --ruler-yellow:#E8C547;
     --gap:clamp(1.2rem, 4vw, 3rem);
   }
   *{box-sizing:border-box; margin:0; padding:0;}
@@ -23,267 +29,323 @@
       repeating-linear-gradient(0deg, var(--mat-line-strong) 0 1px, transparent 1px 200px),
       repeating-linear-gradient(90deg, var(--mat-line-strong) 0 1px, transparent 1px 200px),
       var(--mat-dark);
-    color:var(--cream); font-family:'Inter', sans-serif; line-height:1.6; -webkit-font-smoothing:antialiased;
+    color:var(--cream);
+    font-family:'Inter', sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
   }
   h1,h2,h3{font-family:'Space Grotesk', sans-serif; letter-spacing:-0.01em;}
   .mono{font-family:'JetBrains Mono', monospace;}
   a{color:inherit;}
   ::selection{background:var(--blade); color:var(--cream);}
 
+  /* ruler edges */
+  .ruler-top, .ruler-left{position:fixed; z-index:50; color:var(--cream-dim); font-size:10px; opacity:.55; pointer-events:none;}
+  .ruler-top{top:0; left:0; right:0; height:22px; display:flex; align-items:flex-end; background:linear-gradient(var(--mat-dark), transparent);}
+  .ruler-top span{flex:0 0 200px; border-left:1px solid var(--mat-line-strong); padding-left:4px;}
+  .ruler-left{top:0; bottom:0; left:0; width:22px; writing-mode:vertical-rl;}
+  @media (max-width:700px){.ruler-top,.ruler-left{display:none;}}
+
   nav{
-    position:sticky; top:0; z-index:40; display:flex; justify-content:space-between; align-items:center;
-    padding:1.1rem var(--gap); background:rgba(25,50,38,0.85); backdrop-filter:blur(8px);
+    position:sticky; top:0; z-index:40;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:1.1rem var(--gap);
+    background:rgba(25,50,38,0.85); backdrop-filter:blur(8px);
     border-bottom:1px solid var(--mat-line-strong);
   }
   nav .brand{font-weight:700; font-size:1.05rem;}
   nav .brand .dot{color:var(--blade);}
-  .back-link{
-    font-family:'JetBrains Mono',monospace; font-size:.8rem; text-decoration:none; color:var(--cream-dim);
-    display:flex; align-items:center; gap:.4rem; transition:color .2s;
+  nav ul{list-style:none; display:flex; gap:1.6rem; font-size:.85rem;}
+  nav ul a{text-decoration:none; opacity:.8; transition:opacity .2s;}
+  nav ul a:hover{opacity:1; color:var(--ruler-yellow);}
+  nav .resume-btn{
+    font-size:.78rem; padding:.5rem .9rem; border:1px solid var(--cream-dim);
+    border-radius:2px; text-decoration:none; opacity:.9;
   }
-  .back-link:hover{color:var(--ruler-yellow);}
+  @media (max-width:700px){ nav ul{display:none;} }
 
-  main{max-width:980px; margin:0 auto; padding:0 var(--gap) 6rem;}
+  section{padding:5.5rem var(--gap); max-width:1100px; margin:0 auto;}
 
-  .cs-hero{padding:4.5rem 0 3rem;}
-  .cs-hero .title-row{display:flex; align-items:center; gap:1.1rem; flex-wrap:wrap;}
-  .cs-hero .app-icon{
-    width:64px; height:64px; border-radius:16px; object-fit:cover;
-    border:1px solid var(--mat-line-strong); box-shadow:0 10px 24px rgba(0,0,0,0.35);
-    flex-shrink:0;
+  /* HERO */
+  .hero{padding-top:7rem; padding-bottom:6rem; position:relative;}
+  .hero .eyebrow{
+    font-family:'JetBrains Mono', monospace; font-size:.78rem; letter-spacing:.12em;
+    color:var(--ruler-yellow); text-transform:uppercase; margin-bottom:1.2rem;
+    display:inline-flex; align-items:center; gap:.5rem;
   }
-  .cs-hero .eyebrow{
-    font-family:'JetBrains Mono', monospace; font-size:.78rem; letter-spacing:.12em; color:var(--ruler-yellow);
-    text-transform:uppercase; margin-bottom:1.1rem; display:inline-flex; align-items:center; gap:.5rem;
+  .hero .eyebrow::before{content:''; width:22px; height:1px; background:var(--ruler-yellow);}
+  .hero h1{font-size:clamp(2.4rem, 6vw, 4.6rem); line-height:1.02; font-weight:700; max-width:16ch;}
+  .hero h1 .cut{color:var(--blade);}
+  .hero p.tagline{
+    margin-top:1.4rem; font-size:clamp(1rem,2vw,1.2rem); color:var(--cream-dim); max-width:52ch;
   }
-  .cs-hero .eyebrow::before{content:''; width:22px; height:1px; background:var(--ruler-yellow);}
-  .cs-hero h1{font-size:clamp(2.2rem, 5vw, 3.4rem); max-width:20ch;}
-  .cs-hero p.sub{margin-top:1rem; font-size:1.05rem; color:var(--cream-dim); max-width:60ch;}
-
-  .meta-strip{
-    display:flex; flex-wrap:wrap; gap:0; margin-top:2.5rem;
-    border-top:1px dashed var(--mat-line-strong); border-bottom:1px dashed var(--mat-line-strong);
-  }
-  .meta-strip div{flex:1 1 160px; padding:1rem 1.3rem; border-left:1px dashed var(--mat-line-strong);}
-  .meta-strip div:first-child{border-left:none;}
-  .meta-strip .lbl{font-family:'JetBrains Mono',monospace; font-size:.7rem; color:var(--ruler-yellow); text-transform:uppercase; letter-spacing:.06em;}
-  .meta-strip .val{margin-top:.3rem; font-size:.92rem;}
-
-  section{padding:3.2rem 0;}
-  .section-head{display:flex; align-items:baseline; gap:1rem; margin-bottom:1.6rem;}
-  .section-head .idx{font-family:'JetBrains Mono',monospace; color:var(--blade); font-size:.85rem;}
-  .section-head h2{font-size:clamp(1.3rem,3vw,1.7rem);}
-  .section-head::after{content:''; flex:1; height:1px; background:var(--mat-line-strong);}
-  section p{color:var(--cream-dim); font-size:.98rem; max-width:70ch;}
-  section p + p{margin-top:.9rem;}
-
-  /* Cropped Figma embed: container matches a phone's aspect ratio (with a little
-     extra room for the device bezel) so Figma doesn't letterbox with black bars,
-     then the iframe is scaled up just enough to crop Figma's UI chrome
-     (expand icon, nav arrows, file name bar) while keeping the full device visible. */
-  .embed-frame{
-    margin:1.5rem auto 0;
-    width:100%;
-    max-width:380px;
-    aspect-ratio:390 / 860;
-    overflow:hidden;
-    position:relative;
-    border-radius:48px;
-    border:1px solid var(--mat-line-strong);
-    box-shadow:0 20px 45px rgba(0,0,0,0.32);
-    background:var(--mat-mid);
-  }
-  .embed-frame iframe{
-    position:absolute;
-    top:54%;
-    left:50%;
-    width:134%;
-    height:134%;
-    transform:translate(-50%, -50%);
-    border:none;
-    display:block;
-  }
-  .embed-note{
-    margin-top:.7rem; font-family:'JetBrains Mono',monospace; font-size:.72rem; color:var(--cream-dim); opacity:.7;
-  }
-
-  .shot-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:1rem; margin-top:1.5rem;}
-  .shot{
-    height:360px;
-    background:var(--mat-mid); border:1px solid var(--mat-line-strong); border-radius:10px;
-    overflow:hidden; position:relative; cursor:pointer;
-  }
-  .shot img{
-    width:100%; height:100%; object-fit:cover; object-position:top center; display:block;
-    transition:transform .35s ease, filter .35s ease;
-  }
-  .shot:hover img{transform:scale(1.06); filter:brightness(1.05);}
-  .shot .cap{
-    position:absolute; left:0; right:0; bottom:0; padding:.7rem .7rem .6rem;
-    background:linear-gradient(transparent, rgba(0,0,0,0.72));
-    font-family:'JetBrains Mono',monospace; font-size:.72rem; color:var(--cream);
-    display:flex; align-items:center; justify-content:space-between; gap:.4rem;
-  }
-  .shot .cap .expand{opacity:.7; font-size:.8rem;}
-  @media (max-width:700px){.shot-grid{grid-template-columns:repeat(2,1fr);} .shot{height:320px;}}
-
-  /* Lightbox */
-  .lightbox{
-    display:none; position:fixed; inset:0; z-index:100;
-    background:rgba(10,18,14,0.92); backdrop-filter:blur(4px);
-    align-items:center; justify-content:center; padding:2rem;
-    flex-direction:column;
-  }
-  .lightbox.open{display:flex;}
-  .lightbox img{max-width:min(420px, 90vw); max-height:78vh; border-radius:20px; box-shadow:0 30px 70px rgba(0,0,0,0.5);}
-  .lightbox .lb-cap{margin-top:1.2rem; font-family:'JetBrains Mono',monospace; font-size:.85rem; color:var(--cream-dim);}
-  .lightbox .lb-close{
-    position:absolute; top:1.5rem; right:1.5rem; width:40px; height:40px; border-radius:50%;
-    border:1px solid var(--mat-line-strong); background:var(--mat-mid); color:var(--cream);
-    font-size:1.2rem; cursor:pointer; display:flex; align-items:center; justify-content:center;
-  }
-  .lightbox .lb-close:hover{border-color:var(--ruler-yellow); color:var(--ruler-yellow);}
-
-  .process-list{list-style:none; margin-top:1.4rem; display:grid; gap:1rem;}
-  .process-list li{
-    display:flex; gap:1rem; padding:1rem 1.2rem; background:var(--mat-mid);
-    border:1px solid var(--mat-line-strong); border-radius:6px;
-  }
-  .process-list .step-num{
-    font-family:'JetBrains Mono',monospace; color:var(--ruler-yellow); font-weight:600; flex-shrink:0;
-  }
-  .process-list .step-text h3{font-size:1rem; margin-bottom:.25rem;}
-  .process-list .step-text p{font-size:.9rem; margin:0;}
-
-  .cta-row{display:flex; gap:1rem; margin-top:3rem; flex-wrap:wrap;}
+  .hero .actions{display:flex; gap:1rem; margin-top:2.4rem; flex-wrap:wrap;}
   .btn{
-    font-family:'JetBrains Mono', monospace; font-size:.82rem; padding:.85rem 1.4rem; border-radius:2px;
-    text-decoration:none; display:inline-flex; align-items:center; gap:.5rem; transition:transform .15s ease, background .2s ease;
+    font-family:'JetBrains Mono', monospace; font-size:.82rem; padding:.85rem 1.4rem;
+    border-radius:2px; text-decoration:none; display:inline-flex; align-items:center; gap:.5rem;
+    transition:transform .15s ease, background .2s ease;
   }
   .btn:hover{transform:translateY(-2px);}
   .btn-primary{background:var(--blade); color:var(--cream);}
   .btn-primary:hover{background:var(--blade-dim);}
   .btn-outline{border:1px solid var(--cream-dim); color:var(--cream);}
 
-  footer{padding:3rem var(--gap); text-align:center; border-top:1px dashed var(--mat-line-strong); font-size:.75rem; color:var(--cream-dim); font-family:'JetBrains Mono',monospace; opacity:.6;}
+  /* measurement strip */
+  .strip{
+    margin-top:4rem; display:flex; gap:0; border-top:1px dashed var(--mat-line-strong);
+    border-bottom:1px dashed var(--mat-line-strong); flex-wrap:wrap;
+  }
+  .strip div{flex:1 1 160px; padding:1.1rem 1.4rem; border-left:1px dashed var(--mat-line-strong);}
+  .strip div:first-child{border-left:none;}
+  .strip .num{font-family:'JetBrains Mono',monospace; color:var(--ruler-yellow); font-size:1.5rem; font-weight:500;}
+  .strip .lbl{font-size:.78rem; color:var(--cream-dim); margin-top:.2rem;}
+
+  /* SECTION LABELS */
+  .section-head{display:flex; align-items:baseline; gap:1rem; margin-bottom:2.6rem;}
+  .section-head .idx{font-family:'JetBrains Mono',monospace; color:var(--blade); font-size:.85rem;}
+  .section-head h2{font-size:clamp(1.6rem,3.4vw,2.2rem);}
+  .section-head::after{content:''; flex:1; height:1px; background:var(--mat-line-strong);}
+
+  /* ABOUT */
+  .about-grid{display:grid; grid-template-columns:1.3fr 1fr; gap:3rem;}
+  .about-grid p{color:var(--cream-dim); font-size:1rem;}
+  .about-grid p + p{margin-top:1rem;}
+  .fact-card{
+    background:var(--mat-mid); border:1px solid var(--mat-line-strong); border-radius:4px;
+    padding:1.4rem 1.5rem;
+  }
+  .fact-card h3{font-size:.95rem; color:var(--ruler-yellow); margin-bottom:.7rem; font-family:'JetBrains Mono',monospace; font-weight:400;}
+  .fact-card ul{list-style:none; font-size:.9rem; color:var(--cream-dim);}
+  .fact-card li{padding:.3rem 0; border-bottom:1px dashed var(--mat-line);}
+  .fact-card li:last-child{border-bottom:none;}
+  @media (max-width:800px){.about-grid{grid-template-columns:1fr;}}
+
+  /* SKILLS */
+  .pegboard{display:flex; flex-wrap:wrap; gap:.6rem;}
+  .peg{
+    font-family:'JetBrains Mono',monospace; font-size:.82rem; padding:.55rem 1rem;
+    background:var(--mat-mid); border:1px solid var(--mat-line-strong); border-radius:20px;
+    color:var(--cream-dim);
+  }
+  .peg.accent{border-color:var(--ruler-yellow); color:var(--ruler-yellow);}
+
+  /* PROJECTS */
+  .projects{display:grid; grid-template-columns:1fr 1fr; gap:1.8rem;}
+  @media (max-width:800px){.projects{grid-template-columns:1fr;}}
+  .card{
+    background:var(--cream); color:var(--ink); border-radius:6px; overflow:hidden;
+    box-shadow:0 18px 40px rgba(0,0,0,0.28);
+    transform:rotate(var(--rot,0deg));
+    transition:transform .25s ease, box-shadow .25s ease;
+    display:flex; flex-direction:column;
+  }
+  .card:nth-child(1){--rot:-0.6deg;}
+  .card:nth-child(2){--rot:0.5deg;}
+  .card:hover{transform:rotate(0deg) translateY(-6px); box-shadow:0 26px 55px rgba(0,0,0,0.35);}
+  .card .tape{
+    position:absolute; margin:14px 0 0 24px; width:70px; height:22px;
+    background:rgba(232,197,71,0.85); opacity:.9; transform:rotate(-3deg);
+  }
+  .card-body{padding:1.6rem 1.6rem 1.4rem;}
+  .card .tag{
+    font-family:'JetBrains Mono',monospace; font-size:.7rem; text-transform:uppercase;
+    letter-spacing:.08em; color:var(--blade-dim); margin-bottom:.6rem; display:block;
+  }
+  .card h3{font-size:1.25rem; margin-bottom:.5rem;}
+  .card p.role{font-size:.85rem; color:#5a5142; margin-bottom:.8rem; font-family:'JetBrains Mono',monospace;}
+  .card p.desc{font-size:.92rem; color:#3a352b;}
+  .card .tools{display:flex; flex-wrap:wrap; gap:.4rem; margin-top:1rem;}
+  .card .tools span{
+    font-size:.72rem; padding:.25rem .6rem; background:rgba(21,32,25,0.07); border-radius:12px;
+  }
+  .card-foot{
+    margin-top:auto; padding:1rem 1.6rem; border-top:1px dashed rgba(21,32,25,0.15);
+    display:flex; justify-content:space-between; align-items:center; font-size:.8rem;
+  }
+  .card-foot a{text-decoration:none; font-family:'JetBrains Mono',monospace; color:var(--blade-dim); font-weight:500;}
+
+  /* EXPERIENCE TIMELINE */
+  .timeline{border-left:1px dashed var(--mat-line-strong); padding-left:2rem; margin-left:.5rem;}
+  .t-item{position:relative; padding-bottom:2.6rem;}
+  .t-item:last-child{padding-bottom:0;}
+  .t-item::before{
+    content:''; position:absolute; left:-2.42rem; top:.35rem; width:10px; height:10px;
+    border-radius:50%; background:var(--ruler-yellow); box-shadow:0 0 0 4px var(--mat-dark);
+  }
+  .t-item .date{font-family:'JetBrains Mono',monospace; font-size:.75rem; color:var(--ruler-yellow);}
+  .t-item h3{font-size:1.1rem; margin-top:.3rem;}
+  .t-item .org{font-size:.85rem; color:var(--cream-dim); margin-bottom:.6rem;}
+  .t-item ul{padding-left:1.1rem; font-size:.9rem; color:var(--cream-dim);}
+  .t-item li{margin-bottom:.3rem;}
+
+  /* CONTACT */
+  footer{
+    padding:5rem var(--gap) 3rem; text-align:center; border-top:1px dashed var(--mat-line-strong);
+  }
+  footer h2{font-size:clamp(1.8rem,4vw,2.8rem); max-width:18ch; margin:0 auto 1.2rem;}
+  footer p{color:var(--cream-dim); max-width:44ch; margin:0 auto 2rem;}
+  .contact-links{display:flex; justify-content:center; gap:1.2rem; flex-wrap:wrap;}
+  footer .bottom{margin-top:4rem; font-size:.75rem; color:var(--cream-dim); font-family:'JetBrains Mono',monospace; opacity:.6;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important;}
+  }
 </style>
 </head>
 <body>
 
+<div class="ruler-top mono">
+  <span>0</span><span>200</span><span>400</span><span>600</span><span>800</span><span>1000</span><span>1200</span>
+</div>
+<div class="ruler-left mono">MEASURE TWICE · CUT ONCE</div>
+
 <nav>
-  <a class="back-link" href="index.html">← Back to Portfolio</a>
   <div class="brand">Ysa on Designs<span class="dot">.</span></div>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a class="resume-btn" href="DYG_CV_GitHub.pdf" target="_blank">Résumé ↓</a>
 </nav>
 
-<main>
-  <div class="cs-hero">
-    <span class="eyebrow">Case Study · Systems Analysis and Design</span>
-    <div class="title-row">
-      <img class="app-icon" src="screens/Logo_Only_-Black_ver.jpg" alt="IponTayo app logo">
-      <h1>IponTayo</h1>
-    </div>
-    <p class="sub">An AI-integrated personal finance app addressing low financial literacy in the Philippines — designed to make net-pay calculation, budgeting, and localized saving habits like Paluwagan and Padala easy to track in one place.</p>
-
-    <div class="meta-strip mono">
-      <div><div class="lbl">Role</div><div class="val">UI/UX Designer</div></div>
-      <div><div class="lbl">Timeline</div><div class="val">Nov 2025</div></div>
-      <div><div class="lbl">Tools</div><div class="val">Figma</div></div>
-      <div><div class="lbl">Deliverable</div><div class="val">Hi-Fi Prototype</div></div>
-    </div>
+<section class="hero">
+  <span class="eyebrow">Information Systems · Sophomore</span>
+  <h1>Designing clear <span class="cut">systems</span>, one cut at a time.</h1>
+  <p class="tagline">UI/UX Designer &amp; Systems Analyst translating messy requirements into wireframes, process flows, and interfaces people actually understand.</p>
+  <div class="actions">
+    <a class="btn btn-primary" href="#projects">View Projects →</a>
+    <a class="btn btn-outline" href="#contact">Get in Touch</a>
   </div>
 
-  <section>
-    <div class="section-head"><span class="idx mono">01</span><h2>The Problem</h2></div>
-    <p>Only a quarter of Filipinos are confident with basic budgeting, while most financial apps on the market are foreign-made and don't reflect local money habits — things like Paluwagan (community savings), Padala (family remittances), or the specific structure of PH payroll deductions (SSS, PhilHealth, Pag-IBIG, BIR TRAIN tax).</p>
-    <p>IponTayo set out to close that gap: an app that speaks the language of Filipino personal finance instead of asking users to translate their habits into a generic budgeting template.</p>
-  </section>
-
-  <section>
-    <div class="section-head"><span class="idx mono">02</span><h2>Prototype Walkthrough</h2></div>
-    <p>Click through the interactive prototype below.</p>
-    <div class="embed-frame">
-      <iframe src="https://embed.figma.com/proto/jekVAA2nGogh3bkOQwFzJR/SYSANDE_GRP8?node-id=163-780&p=f&viewport=442%2C226%2C0.11&scaling=scale-down&content-scaling=fixed&starting-point-node-id=163%3A780&page-id=0%3A1&embed-host=share" allowfullscreen></iframe>
-    </div>
-  </section>
-
-  <section>
-    <div class="section-head"><span class="idx mono">03</span><h2>Key Screens</h2></div>
-    <p>Six core screens make up the hi-fidelity prototype, covering the full flow from net pay calculation to long-term financial roadmapping. Tap any screen to view it full-size.</p>
-    <div class="shot-grid">
-      <div class="shot" data-full="screens/Dashboard.png" data-cap="Dashboard">
-        <img src="screens/Dashboard.png" alt="Dashboard screen">
-        <span class="cap">Dashboard <span class="expand">⤢</span></span>
-      </div>
-      <div class="shot" data-full="screens/Goals.png" data-cap="Goals & Net Pay Calculator">
-        <img src="screens/Goals.png" alt="Goals and net pay calculator screen">
-        <span class="cap">Goals &amp; Net Pay Calc <span class="expand">⤢</span></span>
-      </div>
-      <div class="shot" data-full="screens/Projections.png" data-cap="Projections & Tracking">
-        <img src="screens/Projections.png" alt="Projections and tracking screen">
-        <span class="cap">Projections &amp; Tracking <span class="expand">⤢</span></span>
-      </div>
-      <div class="shot" data-full="screens/AI_Financial_Roadmap.png" data-cap="Financial Roadmap">
-        <img src="screens/AI_Financial_Roadmap.png" alt="Financial roadmap screen">
-        <span class="cap">Financial Roadmap <span class="expand">⤢</span></span>
-      </div>
-      <div class="shot" data-full="screens/Guide.png" data-cap="Financial Guide">
-        <img src="screens/Guide.png" alt="Financial guide screen">
-        <span class="cap">Financial Guide <span class="expand">⤢</span></span>
-      </div>
-      <div class="shot" data-full="screens/Account.png" data-cap="Profile">
-        <img src="screens/Account.png" alt="Profile screen">
-        <span class="cap">Profile <span class="expand">⤢</span></span>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="section-head"><span class="idx mono">04</span><h2>Process</h2></div>
-    <ul class="process-list">
-      <li><span class="step-num mono">01</span><div class="step-text"><h3>Systems Analysis</h3><p>Worked from the team's SWOT, use case diagram, DFDs, and ERD to understand the actual data and process requirements before opening Figma.</p></div></li>
-      <li><span class="step-num mono">02</span><div class="step-text"><h3>Hi-Fi Design</h3><p>Designed 5 high-fidelity mobile screens covering net pay calculation, budgeting, and goal-tracking interfaces.</p></div></li>
-      <li><span class="step-num mono">03</span><div class="step-text"><h3>Usability Walkthroughs</h3><p>Had 5+ classmates and a professor navigate the prototype live, gathering feedback that shaped the final iteration (e.g., decluttering the dashboard by removing the currency exchange feature).</p></div></li>
-    </ul>
-  </section>
-
-  <section>
-    <div class="section-head"><span class="idx mono">05</span><h2>Outcome</h2></div>
-    <p>The final prototype was approved with minor formatting adjustments only — icon, spacing, and color refinements — with the core flows and feature set validated as-is after the usability walkthroughs.</p>
-  </section>
-
-  <div class="cta-row">
-    <a class="btn btn-primary" href="https://www.figma.com/" target="_blank">Open in Figma →</a>
-    <a class="btn btn-outline" href="index.html">← Back to Portfolio</a>
+  <div class="strip mono">
+    <div><div class="num">2</div><div class="lbl">Case study projects</div></div>
+    <div><div class="num">5</div><div class="lbl">Departments coordinated</div></div>
+    <div><div class="num">6</div><div class="lbl">Events documented</div></div>
+    <div><div class="num">2028</div><div class="lbl">Expected graduation</div></div>
   </div>
-</main>
+</section>
 
-<footer>BUILT ON A CUTTING MAT · MANILA, PH</footer>
+<section id="about">
+  <div class="section-head"><span class="idx mono">01</span><h2>About</h2></div>
+  <div class="about-grid">
+    <div>
+      <p>I'm an Information Systems student at De La Salle-College of Saint Benilde specializing in UI/UX design and systems & design analysis. My work focuses on turning vague problems into clear diagrams, wireframes, and navigable user interfaces.</p>
+      <p>Outside the classroom, I lead operations for Developers Society Benilde as Chief Operations Officer. In this role, I coordinate five departments to keep documentation, timelines, and communication consistent across every event we run. I bring this exact operational discipline into my design and analysis projects by prioritizing clarity first and decoration second.</p>
+    </div>
+    <div class="fact-card">
+      <h3>// QUICK FACTS</h3>
+      <ul>
+        <li>BS Information Systems, Software Engineering track</li>
+        <li>Dean's Lister · CGPA: 3.343</li>
+        <li>Chief Operations Officer, Developers Society Benilde</li>
+        <li>Figma &amp; Canva for design work</li>
+        <li>Based in Pasig, Philippines</li>
+      </ul>
+    </div>
+  </div>
+</section>
 
-<div class="lightbox" id="lightbox">
-  <button class="lb-close" id="lbClose" aria-label="Close">✕</button>
-  <img id="lbImg" src="" alt="">
-  <div class="lb-cap mono" id="lbCap"></div>
-</div>
+<section id="skills">
+  <div class="section-head"><span class="idx mono">02</span><h2>Skills</h2></div>
+  <div class="pegboard">
+    <span class="peg accent">Figma — Wireframes &amp; Prototyping</span>
+    <span class="peg accent">UI/UX Design</span>
+    <span class="peg accent">Systems Analysis</span>
+    <span class="peg">Process Mapping</span>
+    <span class="peg">Canva</span>
+    <span class="peg">C#</span>
+    <span class="peg">C++</span>
+    <span class="peg">Python</span>
+    <span class="peg">SQL</span>
+    <span class="peg">Kotlin</span>
+    <span class="peg">Google Workspace</span>
+    <span class="peg">Project Coordination</span>
+  </div>
+</section>
 
-<script>
-  const lightbox = document.getElementById('lightbox');
-  const lbImg = document.getElementById('lbImg');
-  const lbCap = document.getElementById('lbCap');
-  const lbClose = document.getElementById('lbClose');
+<section id="projects">
+  <div class="section-head"><span class="idx mono">03</span><h2>Projects</h2></div>
+  <div class="projects">
 
-  document.querySelectorAll('.shot').forEach(shot => {
-    shot.addEventListener('click', () => {
-      lbImg.src = shot.dataset.full;
-      lbCap.textContent = shot.dataset.cap;
-      lightbox.classList.add('open');
-    });
-  });
+    <div class="card">
+      <div class="card-body">
+        <span class="tag">Systems Analysis &amp; Design</span>
+        <h3>IponTayo</h3>
+        <p class="role">UI/UX Designer — Nov 2025</p>
+        <p class="desc">An AI-integrated personal finance app addressing low financial literacy in the Philippines. Designed the high-fidelity prototype covering an accurate net-pay calculator (SSS, PhilHealth, Pag-IBIG, BIR TRAIN tax), spending pattern warnings, and long-term goal projection — built on top of full DFDs, a use case diagram, and an ERD developed for the course.</p>
+        <div class="tools"><span>Figma</span><span>Use Case Diagram</span><span>DFD</span><span>ERD</span></div>
+      </div>
+      <div class="card-foot">
+        <span>De La Salle-CSB · SYSANDE</span>
+        <a href="ipontayo.html">Case Study →</a>
+      </div>
+    </div>
 
-  function closeLightbox(){ lightbox.classList.remove('open'); lbImg.src=''; }
-  lbClose.addEventListener('click', closeLightbox);
-  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
-</script>
+    <div class="card">
+      <div class="card-body">
+        <span class="tag">Information Management</span>
+        <h3>MyAlaga</h3>
+        <p class="role">UI/UX Designer — Mar 2026</p>
+        <p class="desc">A pet appointment management hub replacing fragmented Facebook messages and paper booklets with real-time booking. Designed the wireframes for owner sign-up, pet profiling, service booking, and a staff-side dashboard for tracking daily appointments and customer status.</p>
+        <div class="tools"><span>Figma</span><span>Wireframing</span><span>SQL Schema</span></div>
+      </div>
+      <div class="card-foot">
+        <span>De La Salle-CSB · ISINFOM</span>
+        <a href="myalaga.html">Case Study →</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="experience">
+  <div class="section-head"><span class="idx mono">04</span><h2>Experience</h2></div>
+  <div class="timeline">
+    <div class="t-item">
+      <div class="date mono">JAN 2026 — PRESENT</div>
+      <h3>Chief Operations Officer</h3>
+      <div class="org">Developers Society Benilde</div>
+      <ul>
+        <li>Coordinate efforts across 5 departments on concurrent projects, using Google Workspace to keep teams aligned</li>
+        <li>Handle post-documentation reports for concluded events, covering around 6 events in the past few months</li>
+        <li>Coordinate with school administrators and the IS Department Chairperson to promote events via department and university-wide emails, extending reach beyond the org</li>
+      </ul>
+    </div>
+    <div class="t-item">
+      <div class="date mono">AUG 2025 — DEC 2025</div>
+      <h3>Chief Operations Officer Understudy</h3>
+      <div class="org">Developers Society Benilde</div>
+      <ul>
+        <li>Worked alongside outgoing officers to manage org events as part of the leadership transition, learning how projects were coordinated across 5 departments</li>
+        <li>Shadowed the Executive Board to learn the responsibilities and workflows of the Chief Operations Officer role</li>
+      </ul>
+    </div>
+    <div class="t-item">
+      <div class="date mono">MAR 2025 — AUG 2025</div>
+      <h3>Internal Relations Associate</h3>
+      <div class="org">Association of Information Management</div>
+      <ul>
+        <li>Managed pre-event email blasts for 100+ recipients, with post-event outreach scaled accordingly.</li>
+        <li>Handled post-documentation reports and created email marketing materials for internal communications.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <span class="eyebrow mono" style="justify-content:center;">// GET IN TOUCH</span>
+  <h2>Let's build something worth measuring twice.</h2>
+  <p>Open to UI/UX design and systems analyst internships. Feel free to reach out — I usually reply within a day.</p>
+  <div class="contact-links">
+    <a class="btn btn-outline" href="mailto:imysa.gaspar@gmail.com">Email</a>
+    <a class="btn btn-outline" href="https://www.linkedin.com/in/ysa-gaspar/" target="_blank">LinkedIn</a>
+    <a class="btn btn-outline" href="https://github.com/ysa-on-designs" target="_blank">GitHub</a>
+  </div>
+  <div class="bottom">BUILT ON A CUTTING MAT · © 2026</div>
+</footer>
 
 </body>
 </html>

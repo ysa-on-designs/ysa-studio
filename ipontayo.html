@@ -77,7 +77,6 @@
   section p{color:var(--cream-dim); font-size:.98rem; max-width:70ch;}
   section p + p{margin-top:.9rem;}
 
- 
   .embed-frame{
     margin:1.5rem auto 0;
     width:100%;
@@ -106,16 +105,41 @@
 
   .shot-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:1rem; margin-top:1.5rem;}
   .shot{
-    aspect-ratio:9/16; background:var(--mat-mid); border:1px solid var(--mat-line-strong); border-radius:10px;
-    overflow:hidden; position:relative;
+    height:360px;
+    background:var(--mat-mid); border:1px solid var(--mat-line-strong); border-radius:10px;
+    overflow:hidden; position:relative; cursor:pointer;
   }
-  .shot img{width:100%; height:100%; object-fit:cover; display:block;}
+  .shot:focus-visible{outline:2px solid var(--ruler-yellow); outline-offset:2px;}
+  .shot img{
+    width:100%; height:100%; object-fit:cover; object-position:top center; display:block;
+    transition:transform .35s ease, filter .35s ease;
+  }
+  .shot:hover img, .shot:focus img{transform:scale(1.06); filter:brightness(1.05);}
   .shot .cap{
-    position:absolute; left:0; right:0; bottom:0; padding:.5rem .6rem;
-    background:linear-gradient(transparent, rgba(0,0,0,0.65));
-    font-family:'JetBrains Mono',monospace; font-size:.68rem; color:var(--cream);
+    position:absolute; left:0; right:0; bottom:0; padding:.7rem .7rem .6rem;
+    background:linear-gradient(transparent, rgba(0,0,0,0.72));
+    font-family:'JetBrains Mono',monospace; font-size:.72rem; color:var(--cream);
+    display:flex; align-items:center; justify-content:space-between; gap:.4rem;
   }
-  @media (max-width:700px){.shot-grid{grid-template-columns:repeat(2,1fr);}}
+  .shot .cap .expand{opacity:.7; font-size:.8rem;}
+  @media (max-width:700px){.shot-grid{grid-template-columns:repeat(2,1fr);} .shot{height:320px;}}
+
+  /* Lightbox */
+  .lightbox{
+    display:none; position:fixed; inset:0; z-index:100;
+    background:rgba(10,18,14,0.92); backdrop-filter:blur(4px);
+    align-items:center; justify-content:center; padding:2rem;
+    flex-direction:column;
+  }
+  .lightbox.open{display:flex;}
+  .lightbox img{max-width:min(420px, 90vw); max-height:78vh; border-radius:20px; box-shadow:0 30px 70px rgba(0,0,0,0.5);}
+  .lightbox .lb-cap{margin-top:1.2rem; font-family:'JetBrains Mono',monospace; font-size:.85rem; color:var(--cream-dim);}
+  .lightbox .lb-close{
+    position:absolute; top:1.5rem; right:1.5rem; width:40px; height:40px; border-radius:50%;
+    border:1px solid var(--mat-line-strong); background:var(--mat-mid); color:var(--cream);
+    font-size:1.2rem; cursor:pointer; display:flex; align-items:center; justify-content:center;
+  }
+  .lightbox .lb-close:hover{border-color:var(--ruler-yellow); color:var(--ruler-yellow);}
 
   .process-list{list-style:none; margin-top:1.4rem; display:grid; gap:1rem;}
   .process-list li{
@@ -175,20 +199,38 @@
     <div class="section-head"><span class="idx mono">02</span><h2>Prototype Walkthrough</h2></div>
     <p>Click through the interactive prototype below.</p>
     <div class="embed-frame">
-      <iframe src="https://embed.figma.com/proto/jekVAA2nGogh3bkOQwFzJR/SYSANDE_GRP8?node-id=163-780&p=f&viewport=442%2C226%2C0.11&scaling=scale-down&content-scaling=fixed&starting-point-node-id=163%3A780&page-id=0%3A1&embed-host=share" allowfullscreen></iframe>
+      <iframe title="IponTayo Figma Prototype" src="https://embed.figma.com/proto/jekVAA2nGogh3bkOQwFzJR/SYSANDE_GRP8?node-id=163-780&p=f&viewport=442%2C226%2C0.11&scaling=scale-down&content-scaling=fixed&starting-point-node-id=163%3A780&page-id=0%3A1&embed-host=share" allowfullscreen></iframe>
     </div>
   </section>
 
   <section>
     <div class="section-head"><span class="idx mono">03</span><h2>Key Screens</h2></div>
-    <p>Six core screens make up the hi-fidelity prototype, covering the full flow from net pay calculation to long-term financial roadmapping.</p>
+    <p>Six core screens make up the hi-fidelity prototype, covering the full flow from net pay calculation to long-term financial roadmapping. Tap any screen to view it full-size.</p>
     <div class="shot-grid">
-      <div class="shot"><img src="screens/Dashboard.png" alt="Dashboard screen"><span class="cap">Dashboard</span></div>
-      <div class="shot"><img src="screens/Goals.png" alt="Goals and net pay calculator screen"><span class="cap">Goals &amp; Net Pay Calculator</span></div>
-      <div class="shot"><img src="screens/Projections.png" alt="Projections and tracking screen"><span class="cap">Projections &amp; Tracking</span></div>
-      <div class="shot"><img src="screens/AI_Financial_Roadmap.png" alt="Financial roadmap screen"><span class="cap">Financial Roadmap</span></div>
-      <div class="shot"><img src="screens/Guide.png" alt="Financial guide screen"><span class="cap">Financial Guide</span></div>
-      <div class="shot"><img src="screens/Account.png" alt="Profile screen"><span class="cap">Profile</span></div>
+      <div class="shot" tabindex="0" role="button" aria-label="View Dashboard screen full size" data-full="screens/Dashboard.png" data-cap="Dashboard">
+        <img src="screens/Dashboard.png" alt="Dashboard screen">
+        <span class="cap">Dashboard <span class="expand">⤢</span></span>
+      </div>
+      <div class="shot" tabindex="0" role="button" aria-label="View Goals and Net Pay Calculator full size" data-full="screens/Goals.png" data-cap="Goals & Net Pay Calculator">
+        <img src="screens/Goals.png" alt="Goals and net pay calculator screen">
+        <span class="cap">Goals &amp; Net Pay Calc <span class="expand">⤢</span></span>
+      </div>
+      <div class="shot" tabindex="0" role="button" aria-label="View Projections and Tracking full size" data-full="screens/Projections.png" data-cap="Projections & Tracking">
+        <img src="screens/Projections.png" alt="Projections and tracking screen">
+        <span class="cap">Projections &amp; Tracking <span class="expand">⤢</span></span>
+      </div>
+      <div class="shot" tabindex="0" role="button" aria-label="View Financial Roadmap full size" data-full="screens/AI_Financial_Roadmap.png" data-cap="Financial Roadmap">
+        <img src="screens/AI_Financial_Roadmap.png" alt="Financial roadmap screen">
+        <span class="cap">Financial Roadmap <span class="expand">⤢</span></span>
+      </div>
+      <div class="shot" tabindex="0" role="button" aria-label="View Financial Guide full size" data-full="screens/Guide.png" data-cap="Financial Guide">
+        <img src="screens/Guide.png" alt="Financial guide screen">
+        <span class="cap">Financial Guide <span class="expand">⤢</span></span>
+      </div>
+      <div class="shot" tabindex="0" role="button" aria-label="View Profile full size" data-full="screens/Account.png" data-cap="Profile">
+        <img src="screens/Account.png" alt="Profile screen">
+        <span class="cap">Profile <span class="expand">⤢</span></span>
+      </div>
     </div>
   </section>
 
@@ -207,12 +249,55 @@
   </section>
 
   <div class="cta-row">
-    <a class="btn btn-primary" href="https://www.figma.com/" target="_blank">Open in Figma →</a>
+    <a class="btn btn-primary" href="https://www.figma.com/" target="_blank" rel="noopener noreferrer">Open in Figma →</a>
     <a class="btn btn-outline" href="index.html">← Back to Portfolio</a>
   </div>
 </main>
 
 <footer>BUILT ON A CUTTING MAT · MANILA, PH</footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
+  <button class="lb-close" id="lbClose" aria-label="Close lightbox">✕</button>
+  <img id="lbImg" src="" alt="">
+  <div class="lb-cap mono" id="lbCap"></div>
+</div>
+
+<script>
+  const lightbox = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lbImg');
+  const lbCap = document.getElementById('lbCap');
+  const lbClose = document.getElementById('lbClose');
+
+  function openLightbox(shot) {
+    lbImg.src = shot.dataset.full;
+    lbImg.alt = shot.dataset.cap;
+    lbCap.textContent = shot.dataset.cap;
+    lightbox.classList.add('open');
+    lightbox.setAttribute('aria-hidden', 'false');
+    lbClose.focus();
+  }
+
+  function closeLightbox(){ 
+    lightbox.classList.remove('open'); 
+    lightbox.setAttribute('aria-hidden', 'true');
+    lbImg.src = ''; 
+    lbImg.alt = '';
+  }
+
+  document.querySelectorAll('.shot').forEach(shot => {
+    shot.addEventListener('click', () => openLightbox(shot));
+    shot.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openLightbox(shot);
+      }
+    });
+  });
+
+  lbClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+</script>
 
 </body>
 </html>

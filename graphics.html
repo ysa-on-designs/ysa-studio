@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Graphic Design — Ysa on Designs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* Brand carryover from main site, kept for nav continuity */
+    --mat-dark:#193226; --mat-mid:#234436; --mat-line-strong:rgba(240,233,216,0.16);
+    --cream:#F1EADA; --cream-dim:#D9CFB6; --blade:#E2622B; --blade-dim:#c9531f; --ruler-yellow:#E8C547;
+
+    /* Corkboard / moodboard palette, unique to this page */
+    --cork:#C9A876;
+    --cork-dark:#A9895E;
+    --cork-deep:#8C6F49;
+    --paper:#FBF6EC;
+    --paper-edge:#EBE0C8;
+    --ink:#3A2E22;
+    --ink-dim:#7A6A54;
+    --pin-red:#C1462F;
+    --gap:clamp(1.2rem, 4vw, 3rem);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:
+      radial-gradient(circle at 1px 1px, rgba(140,111,73,0.35) 1px, transparent 1.6px) 0 0/14px 14px,
+      radial-gradient(circle at 7px 7px, rgba(140,111,73,0.22) 1px, transparent 1.6px) 0 0/14px 14px,
+      linear-gradient(160deg, var(--cork) 0%, var(--cork-dark) 100%);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  h1,h2,h3{font-family:'Space Grotesk', sans-serif; letter-spacing:-0.01em;}
+  .mono{font-family:'JetBrains Mono', monospace;}
+  a{color:inherit;}
+
+  /* Nav stays brand-consistent with the rest of the site */
+  nav{
+    position:sticky; top:0; z-index:40;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:1.1rem var(--gap);
+    background:rgba(25,50,38,0.92); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--mat-line-strong);
+  }
+  nav .brand{font-weight:700; font-size:1.05rem; color:var(--cream);}
+  nav .brand .dot{color:var(--blade);}
+  .back-link{
+    font-family:'JetBrains Mono',monospace; font-size:.8rem; text-decoration:none; color:var(--cream-dim);
+    display:flex; align-items:center; gap:.4rem; transition:color .2s;
+  }
+  .back-link:hover{color:var(--ruler-yellow);}
+
+  main{max-width:1200px; margin:0 auto; padding:0 var(--gap) 6rem;}
+
+  .gd-hero{padding:3.5rem 0 2.5rem;}
+  .gd-hero .eyebrow{
+    font-family:'JetBrains Mono', monospace; font-size:.78rem; letter-spacing:.12em; color:var(--pin-red);
+    text-transform:uppercase; margin-bottom:1rem; display:inline-flex; align-items:center; gap:.5rem;
+  }
+  .gd-hero .eyebrow::before{content:''; width:22px; height:1px; background:var(--pin-red);}
+  .gd-hero h1{font-size:clamp(2.1rem, 5vw, 3.2rem); color:var(--ink); max-width:20ch;}
+  .gd-hero p.sub{margin-top:.9rem; font-size:1.02rem; color:var(--ink-dim); max-width:60ch;}
+
+  /* Masonry gallery */
+  .gallery{
+    column-count:3; column-gap:1.4rem; margin-top:2.5rem;
+  }
+  @media (max-width:900px){.gallery{column-count:2;}}
+  @media (max-width:560px){.gallery{column-count:1;}}
+
+  .pin-card{
+    break-inside:avoid; margin-bottom:1.6rem; position:relative;
+    background:var(--paper); border:1px solid var(--paper-edge);
+    border-radius:6px; padding:.9rem .9rem 1.1rem;
+    box-shadow:0 10px 24px rgba(60,45,25,0.18);
+    transform:rotate(var(--tilt, 0deg));
+  }
+  .pin-card:nth-child(3n+1){--tilt:-1.1deg;}
+  .pin-card:nth-child(3n+2){--tilt:0.8deg;}
+  .pin-card:nth-child(3n){--tilt:-0.4deg;}
+
+  .pin-dot{
+    position:absolute; top:-9px; left:50%; transform:translateX(-50%);
+    width:18px; height:18px; border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #e8836a, var(--pin-red) 65%);
+    box-shadow:0 3px 5px rgba(0,0,0,0.35);
+  }
+
+  .pin-media{
+    width:100%; border-radius:3px; overflow:hidden; background:var(--paper-edge);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .pin-media img{width:100%; display:block;}
+  /* Placeholder sizing until real media is added; remove inline heights once <img> src is real */
+  .pin-placeholder{
+    width:100%; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:.5rem; color:var(--ink-dim); font-family:'JetBrains Mono',monospace; font-size:.72rem;
+    text-align:center; padding:1rem; border:1.5px dashed var(--paper-edge); border-radius:3px;
+    background:repeating-linear-gradient(135deg, rgba(140,111,73,0.06) 0 10px, transparent 10px 20px);
+  }
+  .pin-placeholder .icon{font-size:1.6rem; opacity:.6;}
+
+  .pin-cap{margin-top:.7rem;}
+  .pin-cap .title{font-family:'Space Grotesk',sans-serif; font-size:.95rem; font-weight:600; color:var(--ink);}
+  .pin-cap .tools{
+    margin-top:.15rem; font-family:'JetBrains Mono',monospace; font-size:.68rem; color:var(--ink-dim);
+    text-transform:uppercase; letter-spacing:.04em;
+  }
+
+  footer{
+    padding:3rem var(--gap) 2rem; text-align:center;
+    font-size:.75rem; color:var(--ink-dim); font-family:'JetBrains Mono',monospace; opacity:.8;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="back-link" href="index.html">← Back to Portfolio</a>
+  <div class="brand">Ysa on Designs<span class="dot">.</span></div>
+</nav>
+
+<main>
+  <div class="gd-hero">
+    <span class="eyebrow">Graphic Design</span>
+    <h1>Pieces I've made along the way.</h1>
+    <p class="sub">A running board of graphic design work — social posts, pubmats, event materials, and other pieces made for my student org and personal projects.</p>
+  </div>
+
+  <div class="gallery">
+
+    <!-- Each .pin-card below is a placeholder. To add a real piece:
+         1) Replace the .pin-placeholder div with: <div class="pin-media"><img src="graphics/your-file.jpg" alt="..."></div>
+         2) Update the title and tools text in .pin-cap
+         3) Adjust the placeholder's inline height (or remove it once a real image is in, images size themselves) -->
+
+    <div class="pin-card"><span class="pin-dot"></span>
+      <div class="pin-placeholder" style="height:260px;"><span class="icon">🖼</span>Add image</div>
+      <div class="pin-cap"><div class="title">Piece Title</div><div class="tools">Canva · Event Pubmat</div></div>
+    </div>
+
+    <div class="pin-card"><span class="pin-dot"></span>
+      <div class="pin-placeholder" style="height:340px;"><span class="icon">🖼</span>Add image</div>
+      <div class="pin-cap"><div class="title">Piece Title</div><div class="tools">Canva · Social Post</div></div>
+    </div>
+
+    <div class="pin-card"><span class="pin-dot"></span>
+      <div class="pin-placeholder" style="height:200px;"><span class="icon">🖼</span>Add image</div>
+      <div class="pin-cap"><div class="title">Piece Title</div><div class="tools">Figma · Poster</div></div>
+    </div>
+
+    <div class="pin-card"><span class="pin-dot"></span>
+      <div class="pin-placeholder" style="height:300px;"><span class="icon">🖼</span>Add image</div>
+      <div class="pin-cap"><div class="title">Piece Title</div><div class="tools">Canva · Email Header</div></div>
+    </div>
+
+    <div class="pin-card"><span class="pin-dot"></span>
+      <div class="pin-placeholder" style="height:230px;"><span class="icon">🖼</span>Add image</div>
+      <div class="pin-cap"><div class="title">Piece Title</div><div class="tools">Canva · Pubmat</div></div>
+    </div>
+
+    <div class="pin-card"><span class="pin-dot"></span>
+      <div class="pin-placeholder" style="height:380px;"><span class="icon">🖼</span>Add image</div>
+      <div class="pin-cap"><div class="title">Piece Title</div><div class="tools">Figma · Social Carousel</div></div>
+    </div>
+
+    <div class="pin-card"><span class="pin-dot"></span>
+      <div class="pin-placeholder" style="height:220px;"><span class="icon">🖼</span>Add image</div>
+      <div class="pin-cap"><div class="title">Piece Title</div><div class="tools">Canva · Announcement</div></div>
+    </div>
+
+    <div class="pin-card"><span class="pin-dot"></span>
+      <div class="pin-placeholder" style="height:270px;"><span class="icon">🖼</span>Add image</div>
+      <div class="pin-cap"><div class="title">Piece Title</div><div class="tools">Canva · Event Pubmat</div></div>
+    </div>
+
+    <div class="pin-card"><span class="pin-dot"></span>
+      <div class="pin-placeholder" style="height:210px;"><span class="icon">🖼</span>Add image</div>
+      <div class="pin-cap"><div class="title">Piece Title</div><div class="tools">Figma · Instagram Post</div></div>
+    </div>
+
+  </div>
+</main>
+
+<footer>PINNED WITH CARE · MANILA, PH</footer>
+
+</body>
+</html>

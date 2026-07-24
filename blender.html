@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D &amp; Blender — Ysa on Designs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --mat-dark:#193226; --mat-mid:#234436; --mat-line-strong:rgba(240,233,216,0.16);
+    --cream:#F1EADA; --cream-dim:#D9CFB6;
+
+    /* Blender viewport-inspired palette, unique to this page */
+    --vp-bg:#232323;
+    --vp-panel:#2E2E2E;
+    --vp-grid:rgba(255,255,255,0.05);
+    --vp-grid-strong:rgba(255,255,255,0.09);
+    --vp-orange:#E8792D;
+    --vp-orange-dim:#c9631f;
+    --vp-text:#E7E7E7;
+    --vp-text-dim:#9A9A9A;
+    --gap:clamp(1.2rem, 4vw, 3rem);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:
+      repeating-linear-gradient(0deg, var(--vp-grid) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--vp-grid) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(0deg, var(--vp-grid-strong) 0 1px, transparent 1px 160px),
+      repeating-linear-gradient(90deg, var(--vp-grid-strong) 0 1px, transparent 1px 160px),
+      var(--vp-bg);
+    color:var(--vp-text);
+    font-family:'Inter', sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:'Space Grotesk', sans-serif; letter-spacing:-0.01em;}
+  .mono{font-family:'JetBrains Mono', monospace;}
+  a{color:inherit;}
+  ::selection{background:var(--vp-orange); color:#1a1a1a;}
+
+  nav{
+    position:sticky; top:0; z-index:40;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:1.1rem var(--gap);
+    background:rgba(25,50,38,0.92); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--mat-line-strong);
+  }
+  nav .brand{font-weight:700; font-size:1.05rem; color:var(--cream);}
+  nav .brand .dot{color:var(--vp-orange);}
+  .back-link{
+    font-family:'JetBrains Mono',monospace; font-size:.8rem; text-decoration:none; color:var(--cream-dim);
+    display:flex; align-items:center; gap:.4rem; transition:color .2s;
+  }
+  .back-link:hover{color:var(--vp-orange);}
+
+  main{max-width:1200px; margin:0 auto; padding:0 var(--gap) 6rem;}
+
+  .bl-hero{padding:3.5rem 0 2.5rem;}
+  .bl-hero .eyebrow{
+    font-family:'JetBrains Mono', monospace; font-size:.78rem; letter-spacing:.12em; color:var(--vp-orange);
+    text-transform:uppercase; margin-bottom:1rem; display:inline-flex; align-items:center; gap:.5rem;
+  }
+  .bl-hero .eyebrow::before{content:''; width:22px; height:1px; background:var(--vp-orange);}
+  .bl-hero h1{font-size:clamp(2.1rem, 5vw, 3.2rem); max-width:22ch;}
+  .bl-hero p.sub{margin-top:.9rem; font-size:1.02rem; color:var(--vp-text-dim); max-width:60ch;}
+
+  .viewport-tag{
+    display:inline-flex; align-items:center; gap:.5rem; margin-top:1.6rem;
+    font-family:'JetBrains Mono',monospace; font-size:.72rem; color:var(--vp-text-dim);
+    border:1px solid rgba(255,255,255,0.12); border-radius:20px; padding:.4rem .9rem;
+  }
+  .viewport-tag .dot{width:7px; height:7px; border-radius:50%; background:var(--vp-orange);}
+
+  .grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:1.3rem; margin-top:2.5rem;}
+  @media (max-width:900px){.grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:560px){.grid{grid-template-columns:1fr;}}
+
+  .render-card{
+    background:var(--vp-panel); border:1px solid rgba(255,255,255,0.08); border-radius:8px;
+    overflow:hidden; transition:transform .25s ease, border-color .25s ease;
+  }
+  .render-card:hover{transform:translateY(-4px); border-color:var(--vp-orange);}
+  .render-media{
+    aspect-ratio:4/3; background:
+      repeating-linear-gradient(45deg, #2a2a2a 0 10px, #262626 10px 20px);
+    display:flex; align-items:center; justify-content:center; flex-direction:column; gap:.5rem;
+    color:var(--vp-text-dim); font-family:'JetBrains Mono',monospace; font-size:.72rem; text-align:center; padding:1rem;
+  }
+  .render-media img{width:100%; height:100%; object-fit:cover; display:block;}
+  .render-media .icon{font-size:1.6rem; opacity:.6;}
+  .render-cap{padding:.9rem 1rem 1.1rem;}
+  .render-cap .title{font-family:'Space Grotesk',sans-serif; font-size:.95rem; font-weight:600; color:var(--vp-text);}
+  .render-cap .meta{
+    margin-top:.2rem; font-family:'JetBrains Mono',monospace; font-size:.68rem; color:var(--vp-orange);
+    text-transform:uppercase; letter-spacing:.04em;
+  }
+
+  footer{
+    padding:3rem var(--gap) 2rem; text-align:center;
+    font-size:.75rem; color:var(--vp-text-dim); font-family:'JetBrains Mono',monospace; opacity:.8;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="back-link" href="index.html">← Back to Portfolio</a>
+  <div class="brand">Ysa on Designs<span class="dot">.</span></div>
+</nav>
+
+<main>
+  <div class="bl-hero">
+    <span class="eyebrow">3D &amp; Blender</span>
+    <h1>Early 3D work, made in Blender.</h1>
+    <p class="sub">A few pieces from when I was learning 3D modeling and rendering in Blender. Older work, but still mine, still worth showing.</p>
+    <div class="viewport-tag"><span class="dot"></span>Viewport: Rendered Shading</div>
+  </div>
+
+  <div class="grid">
+
+    <!-- Each .render-card below is a placeholder. To add a real piece:
+         1) Replace the .render-media div's contents with: <img src="blender/your-file.jpg" alt="...">
+         2) Update the title and meta text in .render-cap -->
+
+    <div class="render-card">
+      <div class="render-media"><span class="icon">◆</span>Add render</div>
+      <div class="render-cap"><div class="title">Piece Title</div><div class="meta">Blender · Modeling</div></div>
+    </div>
+
+    <div class="render-card">
+      <div class="render-media"><span class="icon">◆</span>Add render</div>
+      <div class="render-cap"><div class="title">Piece Title</div><div class="meta">Blender · Lighting Study</div></div>
+    </div>
+
+    <div class="render-card">
+      <div class="render-media"><span class="icon">◆</span>Add render</div>
+      <div class="render-cap"><div class="title">Piece Title</div><div class="meta">Blender · Texturing</div></div>
+    </div>
+
+    <div class="render-card">
+      <div class="render-media"><span class="icon">◆</span>Add render</div>
+      <div class="render-cap"><div class="title">Piece Title</div><div class="meta">Blender · Scene</div></div>
+    </div>
+
+    <div class="render-card">
+      <div class="render-media"><span class="icon">◆</span>Add render</div>
+      <div class="render-cap"><div class="title">Piece Title</div><div class="meta">Blender · Render</div></div>
+    </div>
+
+    <div class="render-card">
+      <div class="render-media"><span class="icon">◆</span>Add render</div>
+      <div class="render-cap"><div class="title">Piece Title</div><div class="meta">Blender · Animation Still</div></div>
+    </div>
+
+  </div>
+</main>
+
+<footer>MODELED IN BLENDER · MANILA, PH</footer>
+
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>3D &amp; Blender — Ysa on Designs</title>
+<title>Blender Projects — Ysa on Designs</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -65,7 +65,7 @@
   }
   .bl-hero .eyebrow::before{content:''; width:22px; height:1px; background:var(--vp-orange);}
   .bl-hero h1{font-size:clamp(2.1rem, 5vw, 3.2rem); max-width:22ch;}
-  .bl-hero p.sub{margin-top:.9rem; font-size:1.02rem; color:var(--vp-text-dim); max-width:60ch;}
+  .bl-hero p.sub{margin-top:.9rem; font-size:1.02rem; color:var(--vp-text-dim); max-width:none;}
 
   .tag-row{display:flex; flex-wrap:wrap; gap:.7rem; margin-top:1.6rem;}
   .viewport-tag{
@@ -75,47 +75,86 @@
   }
   .viewport-tag .dot{width:7px; height:7px; border-radius:50%; background:var(--vp-orange);}
   .ig-tag{
-    display:inline-flex; align-items:center;
-    font-family:'JetBrains Mono',monospace; font-size:.75rem; font-weight:600; color:#FFFFFF;
-    text-decoration:none; border-radius:20px; padding:.5rem 1.1rem;
-    background:linear-gradient(45deg, #FEDA75, #FA7E1E, #D62976, #962FBF, #4F5BD5);
-    transition:transform .2s ease, box-shadow .2s ease;
-  }
+  display:inline-flex; align-items:center;
+  font-family:'JetBrains Mono',monospace; font-size:.75rem; font-weight:700; color:#FFFFFF;
+  text-decoration:none; border-radius:20px; padding:.5rem 1.1rem;
+  background:linear-gradient(45deg, #FEDA75, #FA7E1E, #D62976, #962FBF, #4F5BD5);
+  text-shadow:0 1px 3px rgba(0,0,0,0.55);
+  transition:transform .2s ease, box-shadow .2s ease;
+}
   .ig-tag:hover{transform:translateY(-2px); box-shadow:0 8px 20px rgba(214,41,118,0.35);}
 
-  /* Single column layout: each set of 3 stacked vertically, each its own horizontal carousel */
-  .two-col{display:flex; flex-direction:column; gap:2.6rem; margin-top:2.8rem;}
-  .col h3{
+  /* Each Set: one large main view, thumbnails below to switch it, then a short set description */
+  .sets{display:flex; flex-direction:column; gap:3.2rem; margin-top:2.8rem;}
+  .set h3{
     font-family:'JetBrains Mono',monospace; font-size:.75rem; color:var(--vp-orange);
     letter-spacing:.08em; text-transform:uppercase; margin-bottom:1rem;
   }
-  .carousel{
-    display:flex; gap:1rem; overflow-x:auto; padding-bottom:.6rem; scroll-snap-type:x mandatory;
-    -webkit-overflow-scrolling:touch;
-  }
-  .carousel::-webkit-scrollbar{height:6px;}
-  .carousel::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.14); border-radius:3px;}
 
-  .render-card{
-    flex:0 0 220px; scroll-snap-align:start;
-    background:var(--vp-panel); border:1px solid rgba(255,255,255,0.08); border-radius:8px;
-    overflow:hidden; transition:transform .25s ease, border-color .25s ease;
+  .main-view{
+    aspect-ratio:16/9; border-radius:10px; overflow:hidden; position:relative;
+    background:repeating-linear-gradient(45deg, #2a2a2a 0 10px, #262626 10px 20px);
+    border:1px solid rgba(255,255,255,0.08);
+    display:flex; align-items:center; justify-content:center; flex-direction:column; gap:.6rem;
+    color:var(--vp-text-dim); font-family:'JetBrains Mono',monospace; font-size:.8rem; text-align:center;
   }
-  .render-card:hover{transform:translateY(-4px); border-color:var(--vp-orange);}
-  .render-media{
-    aspect-ratio:4/3; background:
-      repeating-linear-gradient(45deg, #2a2a2a 0 10px, #262626 10px 20px);
-    display:flex; align-items:center; justify-content:center; flex-direction:column; gap:.5rem;
-    color:var(--vp-text-dim); font-family:'JetBrains Mono',monospace; font-size:.72rem; text-align:center; padding:1rem;
-  }
-  .render-media img{width:100%; height:100%; object-fit:cover; display:block;}
-  .render-media .icon{font-size:1.6rem; opacity:.6;}
-  .render-cap{padding:.9rem 1rem 1.1rem;}
-  .render-cap .title{font-family:'Space Grotesk',sans-serif; font-size:.95rem; font-weight:600; color:var(--vp-text);}
-  .render-cap .meta{
-    margin-top:.2rem; font-family:'JetBrains Mono',monospace; font-size:.68rem; color:var(--vp-orange);
+  .main-view img{width:100%; height:100%; object-fit:cover; display:none;}
+  .main-view .icon{font-size:2.2rem; opacity:.55;}
+
+  .main-cap{margin-top:.9rem;}
+  .main-cap .title{font-family:'Space Grotesk',sans-serif; font-size:1.15rem; font-weight:600; color:var(--vp-text);}
+  .main-cap .meta{
+    margin-top:.15rem; font-family:'JetBrains Mono',monospace; font-size:.72rem; color:var(--vp-orange);
     text-transform:uppercase; letter-spacing:.04em;
   }
+
+  .thumb-row{display:flex; gap:.8rem; margin-top:1rem; flex-wrap:wrap;}
+  .thumb{
+    width:84px; height:84px; border-radius:6px; overflow:hidden; cursor:pointer; padding:0;
+    background:repeating-linear-gradient(45deg, #2a2a2a 0 8px, #262626 8px 16px);
+    border:2px solid transparent; opacity:.6;
+    display:flex; align-items:center; justify-content:center;
+    color:var(--vp-text-dim); font-family:'JetBrains Mono',monospace; font-size:.68rem;
+    transition:opacity .2s ease, border-color .2s ease;
+  }
+  .thumb img{width:100%; height:100%; object-fit:cover; display:none;}
+  .thumb:hover{opacity:.85;}
+  .thumb.active{opacity:1; border-color:var(--vp-orange);}
+
+.set-desc{margin-top:1.2rem; padding-top:1.2rem;
+  border-top:1px dashed rgba(255,255,255,0.14); font-size:.92rem; color:var(--vp-text-dim); max-width:none;}
+  .gallery-grid{
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(190px, 1fr)); gap:1rem;
+  }
+  .gallery-item{
+  aspect-ratio:4/3; border-radius:12px; overflow:hidden; cursor:pointer; position:relative;
+  background:repeating-linear-gradient(45deg, #2a2a2a 0 10px, #262626 10px 20px);
+  border:1px solid rgba(255,255,255,0.05);
+  box-shadow:0 8px 20px rgba(0,0,0,0.35);
+  display:flex; align-items:center; justify-content:center; flex-direction:column; gap:.4rem;
+  color:var(--vp-text-dim); font-family:'JetBrains Mono',monospace; font-size:.7rem; text-align:center; padding:1rem;
+  transition:transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+.gallery-item:hover{transform:translateY(-4px); border-color:var(--vp-orange); box-shadow:0 14px 30px rgba(0,0,0,0.45);}
+  .gallery-item img{width:100%; height:100%; border-radius:8px; object-fit:cover; display:block;}
+  .gallery-item .icon{font-size:1.5rem; opacity:.55;}
+
+  /* Lightbox */
+  .lightbox{
+    display:none; position:fixed; inset:0; z-index:100;
+    background:rgba(10,10,10,0.92); backdrop-filter:blur(4px);
+    align-items:center; justify-content:center; padding:2rem; flex-direction:column;
+  }
+  .lightbox.open{display:flex;}
+  .lightbox img{max-width:min(560px, 90vw); max-height:72vh; border-radius:10px; box-shadow:0 30px 70px rgba(0,0,0,0.5);}
+  .lightbox .lb-title{margin-top:1.2rem; font-family:'Space Grotesk',sans-serif; font-size:1.15rem; font-weight:600; color:var(--vp-text);}
+  .lightbox .lb-desc{margin-top:.4rem; font-family:'Inter',sans-serif; font-size:.9rem; color:var(--vp-text-dim); max-width:60ch; text-align:center;}
+  .lightbox .lb-close{
+    position:absolute; top:1.5rem; right:1.5rem; width:40px; height:40px; border-radius:50%;
+    border:1px solid rgba(255,255,255,0.14); background:var(--vp-panel); color:var(--vp-text);
+    font-size:1.2rem; cursor:pointer; display:flex; align-items:center; justify-content:center;
+  }
+  .lightbox .lb-close:hover{border-color:var(--vp-orange); color:var(--vp-orange);}
 
   footer{
     padding:3rem var(--gap) 2rem; text-align:center;
@@ -124,7 +163,6 @@
 </style>
 </head>
 <body>
-
 <nav>
   <a class="back-link" href="index.html">← Back to Portfolio</a>
   <div class="brand">Ysa on Designs<span class="dot">.</span></div>
@@ -132,62 +170,334 @@
 
 <main>
   <div class="bl-hero">
-    <span class="eyebrow">3D &amp; Blender</span>
+    <span class="eyebrow">Blender Projects</span>
     <h1>Early 3D work, made in Blender.</h1>
-    <p class="sub">A few pieces from when I was learning 3D modeling and rendering in Blender. Older work, but still mine, still worth showing.</p>
+    <p class="sub">Early works from my journey in 3D modeling and rendering. Older projects, but foundational to my progress. All models and assets were created by me, except for certain textures and images used in the project.</p>
+    <br>
+    <p class="sub"><i>Dive deeper into my 3D world—check out more of my work on Instagram! 🎨</i></p>
 
     <div class="tag-row">
-      <span class="viewport-tag"><span class="dot"></span>Viewport: Rendered Shading</span>
+      <!-- <span class="viewport-tag"><span class="dot"></span>Viewport: Rendered Shading</span> -->
       <a class="ig-tag" href="https://www.instagram.com/pandapun__?igsi=NWR2d2Q3MmRreGMx" target="_blank">@pandapun__ on Instagram</a>
     </div>
   </div>
 
-  <div class="two-col">
+  <div class="sets">
 
-    <!-- Each .render-card below is a placeholder. To add a real piece:
-         1) Replace the .render-media div's contents with: <img src="blender/your-file.jpg" alt="...">
-         2) Update the title and meta text in .render-cap -->
+   <div class="set">
+  <h3>◆ Hospital Playlist Season 1 & 2 (슬기로운 의사생활 시즌 1 & 2)</h3>
 
-    <div class="col">
-      <h3>◆ Set 01</h3>
-      <div class="carousel">
-        <div class="render-card">
-          <div class="render-media"><span class="icon">◆</span>Add render</div>
-          <div class="render-cap"><div class="title">Piece Title</div><div class="meta">Blender · Modeling</div></div>
-        </div>
-        <div class="render-card">
-          <div class="render-media"><span class="icon">◆</span>Add render</div>
-          <div class="render-cap"><div class="title">Piece Title</div><div class="meta">Blender · Lighting Study</div></div>
-        </div>
-        <div class="render-card">
-          <div class="render-media"><span class="icon">◆</span>Add render</div>
-          <div class="render-cap"><div class="title">Piece Title</div><div class="meta">Blender · Texturing</div></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col">
-      <h3>◆ Set 02</h3>
-      <div class="carousel">
-        <div class="render-card">
-          <div class="render-media"><span class="icon">◆</span>Add render</div>
-          <div class="render-cap"><div class="title">Piece Title</div><div class="meta">Blender · Scene</div></div>
-        </div>
-        <div class="render-card">
-          <div class="render-media"><span class="icon">◆</span>Add render</div>
-          <div class="render-cap"><div class="title">Piece Title</div><div class="meta">Blender · Render</div></div>
-        </div>
-        <div class="render-card">
-          <div class="render-media"><span class="icon">◆</span>Add render</div>
-          <div class="render-cap"><div class="title">Piece Title</div><div class="meta">Blender · Animation Still</div></div>
-        </div>
-      </div>
-    </div>
-
+  <div class="main-view" id="main-01">
+    <img src="Ysa-On-Design/Projects/CSH_FullOffice/CSH_OfficeRender_Day.png" alt="Day Version">
   </div>
-</main>
+  <div class="main-cap" id="main-01-cap">
+    <div class="title">Chae Songhwa's Office Rendered</div>
+    <div class="meta">Day Version</div>
+  </div>
+  <div class="thumb-row" data-target="main-01">
+    <!-- 1: Day Version (Active by Default) -->
+    <button class="thumb active" data-full="Projects/CSH_FullOffice/CSH_OfficeRender_Day.png" data-title="Chae Songhwa's Office Rendered" data-meta="Day Version">
+      <img src="Projects/CSH_FullOffice/CSH_OfficeRender_Day.png" alt="Day Version">
+    </button>
+
+    <!-- 2: Night Version -->
+    <button class="thumb" data-full="Projects/CSH_FullOffice/CSH_OfficeRender_Night.png" data-title="Chae Songhwa's Office Rendered" data-meta="Night Version">
+      <img src="Projects/CSH_FullOffice/CSH_OfficeRender_Night.png" alt="Night Version">
+    </button>
+
+    <!-- 3: Partially Colored -->
+    <button class="thumb" data-full="Projects/CSH_FullOffice/CSH_PartiallyColoredRender.png" data-title="Chae Songhwa's Office Rendered" data-meta="Partially Colored Render">
+      <img src="Projects/CSH_FullOffice/CSH_PartiallyColoredRender.png" alt="Partially Colored Render">
+    </button>
+
+    <!-- 4: Coffee Close-up -->
+    <button class="thumb" data-full="Projects/CSH_FullOffice/CSH_CloseupCoffeeSetup.png" data-title="Chae Songhwa's Office Rendered" data-meta="Close-up of coffee area">
+      <img src="Projects/CSH_FullOffice/CSH_CloseupCoffeeSetup.png" alt="Close-up of coffee area">
+    </button>
+
+    <!-- 5: Scene 1 -->
+    <button class="thumb" data-full="Projects/CSH_FullOffice/CSH_Scene1.png" data-title="Chae Songhwa's Office Rendered" data-meta="Scene 1">
+      <img src="Projects/CSH_FullOffice/CSH_Scene1.png" alt="Scene 1">
+    </button>
+
+    <!-- 6: Scene 2 -->
+    <button class="thumb" data-full="Projects/CSH_FullOffice/CSH_Scene2.png" data-title="Chae Songhwa's Office Rendered" data-meta="Scene 2">
+      <img src="Projects/CSH_FullOffice/CSH_Scene2.png" alt="Scene 2">
+    </button>
+
+    <!-- 7: Scene 3 -->
+    <button class="thumb" data-full="Projects/CSH_FullOffice/CSH_Scene3.png" data-title="Chae Songhwa's Office Rendered" data-meta="Scene 3">
+      <img src="Projects/CSH_FullOffice/CSH_Scene3.png" alt="Scene 3">
+    </button>
+
+    <!-- 8: Scene 4 -->
+    <button class="thumb" data-full="Projects/CSH_FullOffice/CSH_Scene4.png" data-title="Chae Songhwa's Office Rendered" data-meta="Scene 4">
+      <img src="Projects/CSH_FullOffice/CSH_Scene4.png" alt="Scene 4">
+    </button>
+    </div>
+    <p class="set-desc">Dedicated to one of my favorite K-dramas, Hospital Playlist, this Blender diorama recreates Chae Songhwa's office at Yulje Medical Center, the heart of the show where the five best friends always gather. <br><i>Note: Scenes 3 and 4 are original concepts I designed myself.</i></p>
+      <br>
+       </div>
+    </div>
+
+    <div class="set">
+  <h3>◆ Thirty, Nine (서른, 아홉)</h3>
+
+  <div class="main-view" id="main-02">
+    <img src="Projects/ThirtyNine_ChanyoungLivingRoom/TN_AngledLivingRoomRender.png" alt="Angled View">
+  </div>
+  
+  <div class="main-cap" id="main-02-cap">
+    <div class="title">Jung Chanyoung's Living Room</div>
+    <div class="meta">Angled View</div>
+  </div>
+
+  <div class="thumb-row" data-target="main-02">
+    <!-- 1: Angled View (Active by Default) -->
+    <button class="thumb active" data-full="Projects/ThirtyNine_ChanyoungLivingRoom/TN_AngledLivingRoomRender.png" data-title="Jung Chanyoung's Living Room" data-meta="Angled View">
+      <img src="Projects/ThirtyNine_ChanyoungLivingRoom/TN_AngledLivingRoomRender.png" alt="Angled View">
+    </button>
+
+     <!-- 3: No Texture -->
+    <button class="thumb" data-full="Projects/ThirtyNine_ChanyoungLivingRoom/TN_NoTexture.png" data-title="Jung Chanyoung's Living Room" data-meta="No Texture Render">
+      <img src="Projects/ThirtyNine_ChanyoungLivingRoom/TN_NoTexture.png" alt="Clay View">
+    </button>
+
+    <!-- 2: Front View -->
+    <button class="thumb" data-full="Projects/ThirtyNine_ChanyoungLivingRoom/TN_FrontViewLivingRoomrender.png" data-title="Jung Chanyoung's Living Room" data-meta="Front View">
+      <img src="Projects/ThirtyNine_ChanyoungLivingRoom/TN_FrontViewLivingRoomrender.png" alt="Front View">
+    </button>
+
+    <!-- 4: Close-up -->
+    <button class="thumb" data-full="Projects/ThirtyNine_ChanyoungLivingRoom/TN_Closeup.png" data-title="Jung Chanyoung's Living Room" data-meta="Close-up View">
+      <img src="Projects/ThirtyNine_ChanyoungLivingRoom/TN_Closeup.png" alt="Close-up View">
+    </button>
+  </div>
+  
+  <p class="set-desc">Recreating the cozy ambience of Jung Chanyoung's living room from the Korean TV drama series Thirty, Nine. In this diorama, I focused on the light setup and composition in Blender, with special attention given to the curtains and overall environment. </p>
+  <br>
+</div>
+
+<div class="set">
+  <h3>◆ Hospital Playlist Season 2 (슬기로운 의사생활 시즌 2)</h3>
+
+  <div class="main-view" id="main-03">
+    <img src="Projects/CSH99_BedRoom/CSH99_FullyRenderedBedroomDay.png" alt="Day Version">
+  </div>
+  
+  <div class="main-cap" id="main-03-cap">
+    <div class="title">Chae Songhwa's Bedroom</div>
+    <div class="meta">Day Version</div>
+  </div>
+
+  <div class="thumb-row" data-target="main-03">
+
+    <button class="thumb active" data-full="Projects/CSH99_BedRoom/CSH99_FullyRenderedBedroomDay.png" data-title="Chae Songwha's Bedroom in 1999" data-meta="Day Version">
+      <img src="Projects/CSH99_BedRoom/CSH99_FullyRenderedBedroomDay.png" alt="Day Version">
+    </button>
+
+    <button class="thumb active" data-full="Projects/CSH99_BedRoom/CSH99_FullyRenderedBedroomNight.png" data-title="Chae Songwha's Bedroom in 1999" data-meta="Night Version">
+      <img src="Projects/CSH99_BedRoom/CSH99_FullyRenderedBedroomNight.png" alt="Night Version">
+    </button>
+
+    <button class="thumb active" data-full="Projects/CSH99_BedRoom/CSH99_PartiallyColoredBedroom.png" data-title="Chae Songwha's Bedroom in 1999" data-meta="Work in Progress">
+      <img src="Projects/CSH99_BedRoom/CSH99_PartiallyColoredBedroom.png" alt="Work in Progress render">
+    </button>
+
+    <button class="thumb active" data-full="Projects/CSH99_BedRoom/CSH99_CloseupSideView.png" data-title="Chae Songwha's Bedroom in 1999" data-meta="Close-up View">
+      <img src="Projects/CSH99_BedRoom/CSH99_CloseupSideView.png" alt="Close-up View">
+    </button>
+
+    <button class="thumb active" data-full="Projects/CSH99_BedRoom/CSH99_StudyArea.png" data-title="Chae Songwha's Bedroom in 1999" data-meta="Study Area">
+      <img src="Projects/CSH99_BedRoom/CSH99_StudyArea.png" alt="Study Area">
+    </button>
+
+    <button class="thumb active" data-full="Projects/CSH99_BedRoom/CSH99_Bookshelf&Vanity.png" data-title="Chae Songwha's Bedroom in 1999" data-meta="Bookshelf & Vanity View">
+      <img src="Projects/CSH99_BedRoom/CSH99_Bookshelf&Vanity.png" alt="Bookshelf View">
+    </button>
+  </div>
+  
+  <p class="set-desc">A full view of Chae Songhwa's bedroom in 1999. Working on this diorama taught me how to efficiently scatter and manage repetitive objects, saving time while allowing me to detail individual, unique books.</p>
+  <br>
+</div>
+
+<!-- Set 04: Iksong Clinic -->
+<div class="set">
+  <h3>◆ Iksong Clinic</h3>
+
+  <div class="main-view" id="main-04">
+    <img src="Projects/IksongClinic/IksongClinic_Scene1.png" alt="Scene 1">
+  </div>
+
+  <div class="main-cap" id="main-04-cap">
+    <div class="title">Iksong Clinic</div>
+    <div class="meta">Scene 1</div>
+  </div>
+
+  <div class="thumb-row" data-target="main-04">
+    <button class="thumb active" data-full="Projects/IksongClinic/IksongClinic_Scene1.png" data-title="Iksong Clinic" data-meta="Scene 1">
+      <img src="Projects/IksongClinic/IksongClinic_Scene1.png" alt="Scene 1">
+    </button>
+
+    <button class="thumb" data-full="Projects/IksongClinic/IksongClinic_Scene2.png" data-title="Iksong Clinic" data-meta="Scene 2">
+      <img src="Projects/IksongClinic/IksongClinic_Scene2.png" alt="Scene 2">
+    </button>
+
+    <button class="thumb" data-full="Projects/IksongClinic/IksongClinic_Scene3.png" data-title="Iksong Clinic" data-meta="Scene 3">
+      <img src="Projects/IksongClinic/IksongClinic_Scene3.png" alt="Scene 3">
+    </button>
+
+    <button class="thumb" data-full="Projects/IksongClinic/IksongClinic_Scene4.png" data-title="Iksong Clinic" data-meta="Scene 4">
+      <img src="Projects/IksongClinic/IksongClinic_Scene4.png" alt="Scene 4">
+    </button>
+
+    <button class="thumb" data-full="Projects/IksongClinic/IksongClinic_Scene5.png" data-title="Iksong Clinic" data-meta="Scene 5">
+      <img src="Projects/IksongClinic/IksongClinic_Scene5.png" alt="Scene 5">
+    </button>
+  </div>
+
+  <p class="set-desc">(Spoiler) In an episode of Hospital Playlist, Songhwa gets a biopsy at another hospital to avoid rumors about her condition. It was an early morning appointment before work, and Ikjun was the first to arrive to keep her company during her checkup.</p>
+  <br>
+</div>
+
+<!-- Set 05: Iksong Office Moment -->
+<div class="set">
+  <h3>◆ Iksong Office Moment</h3>
+
+  <div class="main-view" id="main-05">
+    <img src="Projects/IksongOfficeMoment/Iksong_Nap.png" alt="Iksong Nap">
+  </div>
+
+  <div class="main-cap" id="main-05-cap">
+    <div class="title">Iksong Office Moment</div>
+    <div class="meta">Iksong Nap</div>
+  </div>
+
+  <div class="thumb-row" data-target="main-05">
+    <button class="thumb active" data-full="Projects/IksongOfficeMoment/Iksong_Nap.png" data-title="Iksong Office Moment" data-meta="Iksong Nap">
+      <img src="Projects/IksongOfficeMoment/Iksong_Nap.png" alt="Iksong Nap">
+    </button>
+
+    <button class="thumb" data-full="Projects/IksongOfficeMoment/IksongOfficeMoment_Scene1.png" data-title="Iksong Office Moment" data-meta="Scene 1">
+      <img src="Projects/IksongOfficeMoment/IksongOfficeMoment_Scene1.png" alt="Scene 1">
+    </button>
+
+    <button class="thumb" data-full="Projects/IksongOfficeMoment/IksongOfficeMoment_Scene2.png" data-title="Iksong Office Moment" data-meta="Scene 2">
+      <img src="Projects/IksongOfficeMoment/IksongOfficeMoment_Scene2.png" alt="Scene 2">
+    </button>
+
+    <button class="thumb" data-full="Projects/IksongOfficeMoment/IksongOfficeMoment_Scene3.png" data-title="Iksong Office Moment" data-meta="Scene 3">
+      <img src="Projects/IksongOfficeMoment/IksongOfficeMoment_Scene3.png" alt="Scene 3">
+    </button>
+
+    <button class="thumb" data-full="Projects/IksongOfficeMoment/IksongOfficeMoment_Scene4.png" data-title="Iksong Office Moment" data-meta="Scene 4">
+      <img src="Projects/IksongOfficeMoment/IksongOfficeMoment_Scene4.png" alt="Scene 4">
+    </button>
+
+    <button class="thumb" data-full="Projects/IksongOfficeMoment/IksongOfficeMoment_Ver1.png" data-title="Iksong Office Moment" data-meta="Version 1">
+      <img src="Projects/IksongOfficeMoment/IksongOfficeMoment_Ver1.png" alt="Version 1">
+    </button>
+
+    <button class="thumb" data-full="Projects/IksongOfficeMoment/IksongOfficeMoment_Ver2.png" data-title="Iksong Office Moment" data-meta="Version 2">
+      <img src="Projects/IksongOfficeMoment/IksongOfficeMoment_Ver2.png" alt="Version 2">
+    </button>
+  </div>
+
+  <p class="set-desc">One of my first few dioramas featuring custom character models, rendered with warm lighting and textured objects. <br><i>Fun fact: This small setup was later expanded into the full-scale build of Chae Songhwa's office.</i></p>
+  <br>
+</div>
+
+  <div class="other-projects">
+  <h3>◆ Other Side Projects</h3>
+  <br>
+  <div class="gallery-grid">
+    <div class="gallery-item" data-full="Projects/OtherProjects/Chaebird_KikiDeliveryService.png" data-title="Chae Bird Kiki's Delivery Service" data-desc="Kiki's Delivery Service themed Chae Bird.">
+      <img src="Projects/OtherProjects/Chaebird_KikiDeliveryService.png" alt="Chae-bird Kiki's Delivery Service">
+    </div>
+
+    <div class="gallery-item" data-full="Projects/OtherProjects/Chaebird_Witch.png" data-title="Chae Bird Witch" data-desc="Halloween witch themed of Chae Bird.">
+      <img src="Projects/OtherProjects/Chaebird_Witch.png" alt="Chae-bird Witch">
+    </div>
+
+    <div class="gallery-item" data-full="Projects/OtherProjects/ChaeSonghwa_Bassist.png" data-title="Chae Songhwa Bassist" data-desc="Chae Songhwa Singing while playing the bass (she's tone deaf).">
+      <img src="Projects/OtherProjects/ChaeSonghwa_Bassist.png" alt="Chae Song-hwa Bassist">
+    </div>
+
+    <div class="gallery-item" data-full="Projects/OtherProjects/ChaeSonghwa_FirstModel.png" data-title="Chae Songhwa First bird Model" data-desc="First 3D character model render in Blender.">
+      <img src="Projects/OtherProjects/ChaeSonghwa_FirstModel.png" alt="Chae Song-hwa First Model">
+    </div>
+
+    <div class="gallery-item" data-full="Projects/OtherProjects/IksongJu.png" data-title="Iksong & Uju" data-desc="Bird character models of Songhwa, Uju, and Ikjun featuring the iconic Darth Vader helmet and lightsaber.">
+      <img src="Projects/OtherProjects/IksongJu.png" alt="Ik-song & U-ju">
+    </div>
+  </div>
+</div>
 
 <footer>MODELED IN BLENDER · MANILA, PH</footer>
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" id="lbClose" aria-label="Close">✕</button>
+  <img id="lbImg" src="" alt="">
+  <div class="lb-title" id="lbTitle"></div>
+  <div class="lb-desc" id="lbDesc"></div>
+</div>
+
+<script>
+  function initRow(row) {
+    const mainView = document.getElementById(row.dataset.target);
+    const mainImg = mainView.querySelector('img');
+    const mainCap = document.getElementById(row.dataset.target + '-cap');
+
+    function activate(thumb) {
+      row.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+      thumb.classList.add('active');
+
+      mainCap.querySelector('.title').textContent = thumb.dataset.title;
+      mainCap.querySelector('.meta').textContent = thumb.dataset.meta;
+
+      const full = thumb.dataset.full;
+      if (full) {
+        mainImg.src = full;
+        mainImg.style.display = 'block';
+      } else {
+        mainImg.style.display = 'none';
+      }
+    }
+
+    row.querySelectorAll('.thumb').forEach(thumb => {
+      const thumbImg = thumb.querySelector('img');
+      if (thumb.dataset.full && thumbImg) {
+        thumbImg.style.display = 'block';
+      }
+      thumb.addEventListener('click', () => activate(thumb));
+    });
+
+    const initialThumb = row.querySelector('.thumb.active') || row.querySelector('.thumb');
+    if (initialThumb) activate(initialThumb);
+  }
+
+  document.querySelectorAll('.thumb-row').forEach(initRow);
+    // Other Projects gallery lightbox
+  const lightbox = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lbImg');
+  const lbTitle = document.getElementById('lbTitle');
+  const lbDesc = document.getElementById('lbDesc');
+  const lbClose = document.getElementById('lbClose');
+
+  document.querySelectorAll('.gallery-item').forEach(item => {
+    item.addEventListener('click', () => {
+      if (!item.dataset.full) return;
+      lbImg.src = item.dataset.full;
+      lbTitle.textContent = item.dataset.title;
+      lbDesc.textContent = item.dataset.desc;
+      lightbox.classList.add('open');
+    });
+  });
+
+  function closeLightbox(){ lightbox.classList.remove('open'); lbImg.src = ''; }
+  lbClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+</script>
 
 </body>
 </html>

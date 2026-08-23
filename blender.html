@@ -8,8 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --mat-dark:#193226; --mat-mid:#234436; --mat-line-strong:rgba(240,233,216,0.16);
-    --cream:#F1EADA; --cream-dim:#D9CFB6;
+    --mat-line-strong:rgba(0,0,0,0.08);
 
     /* Blender viewport-inspired palette, unique to this page */
     --vp-bg:#232323;
@@ -41,20 +40,21 @@
   a{color:inherit;}
   ::selection{background:var(--vp-orange); color:#1a1a1a;}
 
+  /* Nav: orange, to stand out against the dark viewport background */
   nav{
     position:sticky; top:0; z-index:40;
     display:flex; justify-content:space-between; align-items:center;
     padding:1.1rem var(--gap);
-    background:rgba(25,50,38,0.92); backdrop-filter:blur(8px);
-    border-bottom:1px solid var(--mat-line-strong);
+    background:var(--vp-orange);
+    border-bottom:1px solid rgba(0,0,0,0.12);
   }
-  nav .brand{font-weight:700; font-size:1.05rem; color:var(--cream);}
-  nav .brand .dot{color:var(--vp-orange);}
+  nav .brand{font-weight:700; font-size:1.05rem; color:#FFFFFF;}
+  nav .brand .dot{color:#232323;}
   .back-link{
-    font-family:'JetBrains Mono',monospace; font-size:.8rem; text-decoration:none; color:var(--cream-dim);
+    font-family:'JetBrains Mono',monospace; font-size:.8rem; text-decoration:none; color:rgba(255,255,255,0.85);
     display:flex; align-items:center; gap:.4rem; transition:color .2s;
   }
-  .back-link:hover{color:var(--vp-orange);}
+  .back-link:hover{color:#232323;}
 
   main{max-width:1200px; margin:0 auto; padding:0 var(--gap) 6rem;}
 
@@ -67,18 +67,37 @@
   .bl-hero h1{font-size:clamp(2.1rem, 5vw, 3.2rem); max-width:22ch;}
   .bl-hero p.sub{margin-top:.9rem; font-size:1.02rem; color:var(--vp-text-dim); max-width:60ch;}
 
+  .tag-row{display:flex; flex-wrap:wrap; gap:.7rem; margin-top:1.6rem;}
   .viewport-tag{
-    display:inline-flex; align-items:center; gap:.5rem; margin-top:1.6rem;
+    display:inline-flex; align-items:center; gap:.5rem;
     font-family:'JetBrains Mono',monospace; font-size:.72rem; color:var(--vp-text-dim);
-    border:1px solid rgba(255,255,255,0.12); border-radius:20px; padding:.4rem .9rem;
+    border:1px solid rgba(255,255,255,0.14); border-radius:20px; padding:.45rem 1rem;
   }
   .viewport-tag .dot{width:7px; height:7px; border-radius:50%; background:var(--vp-orange);}
+  .ig-tag{
+    display:inline-flex; align-items:center;
+    font-family:'JetBrains Mono',monospace; font-size:.75rem; font-weight:600; color:#FFFFFF;
+    text-decoration:none; border-radius:20px; padding:.5rem 1.1rem;
+    background:linear-gradient(45deg, #FEDA75, #FA7E1E, #D62976, #962FBF, #4F5BD5);
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .ig-tag:hover{transform:translateY(-2px); box-shadow:0 8px 20px rgba(214,41,118,0.35);}
 
-  .grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:1.3rem; margin-top:2.5rem;}
-  @media (max-width:900px){.grid{grid-template-columns:repeat(2,1fr);}}
-  @media (max-width:560px){.grid{grid-template-columns:1fr;}}
+  /* Single column layout: each set of 3 stacked vertically, each its own horizontal carousel */
+  .two-col{display:flex; flex-direction:column; gap:2.6rem; margin-top:2.8rem;}
+  .col h3{
+    font-family:'JetBrains Mono',monospace; font-size:.75rem; color:var(--vp-orange);
+    letter-spacing:.08em; text-transform:uppercase; margin-bottom:1rem;
+  }
+  .carousel{
+    display:flex; gap:1rem; overflow-x:auto; padding-bottom:.6rem; scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+  }
+  .carousel::-webkit-scrollbar{height:6px;}
+  .carousel::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.14); border-radius:3px;}
 
   .render-card{
+    flex:0 0 220px; scroll-snap-align:start;
     background:var(--vp-panel); border:1px solid rgba(255,255,255,0.08); border-radius:8px;
     overflow:hidden; transition:transform .25s ease, border-color .25s ease;
   }
@@ -116,43 +135,53 @@
     <span class="eyebrow">3D &amp; Blender</span>
     <h1>Early 3D work, made in Blender.</h1>
     <p class="sub">A few pieces from when I was learning 3D modeling and rendering in Blender. Older work, but still mine, still worth showing.</p>
-    <div class="viewport-tag"><span class="dot"></span>Viewport: Rendered Shading</div>
+
+    <div class="tag-row">
+      <span class="viewport-tag"><span class="dot"></span>Viewport: Rendered Shading</span>
+      <a class="ig-tag" href="https://www.instagram.com/pandapun__?igsi=NWR2d2Q3MmRreGMx" target="_blank">@pandapun__ on Instagram</a>
+    </div>
   </div>
 
-  <div class="grid">
+  <div class="two-col">
 
     <!-- Each .render-card below is a placeholder. To add a real piece:
          1) Replace the .render-media div's contents with: <img src="blender/your-file.jpg" alt="...">
          2) Update the title and meta text in .render-cap -->
 
-    <div class="render-card">
-      <div class="render-media"><span class="icon">◆</span>Add render</div>
-      <div class="render-cap"><div class="title">Piece Title</div><div class="meta">Blender · Modeling</div></div>
+    <div class="col">
+      <h3>◆ Set 01</h3>
+      <div class="carousel">
+        <div class="render-card">
+          <div class="render-media"><span class="icon">◆</span>Add render</div>
+          <div class="render-cap"><div class="title">Piece Title</div><div class="meta">Blender · Modeling</div></div>
+        </div>
+        <div class="render-card">
+          <div class="render-media"><span class="icon">◆</span>Add render</div>
+          <div class="render-cap"><div class="title">Piece Title</div><div class="meta">Blender · Lighting Study</div></div>
+        </div>
+        <div class="render-card">
+          <div class="render-media"><span class="icon">◆</span>Add render</div>
+          <div class="render-cap"><div class="title">Piece Title</div><div class="meta">Blender · Texturing</div></div>
+        </div>
+      </div>
     </div>
 
-    <div class="render-card">
-      <div class="render-media"><span class="icon">◆</span>Add render</div>
-      <div class="render-cap"><div class="title">Piece Title</div><div class="meta">Blender · Lighting Study</div></div>
-    </div>
-
-    <div class="render-card">
-      <div class="render-media"><span class="icon">◆</span>Add render</div>
-      <div class="render-cap"><div class="title">Piece Title</div><div class="meta">Blender · Texturing</div></div>
-    </div>
-
-    <div class="render-card">
-      <div class="render-media"><span class="icon">◆</span>Add render</div>
-      <div class="render-cap"><div class="title">Piece Title</div><div class="meta">Blender · Scene</div></div>
-    </div>
-
-    <div class="render-card">
-      <div class="render-media"><span class="icon">◆</span>Add render</div>
-      <div class="render-cap"><div class="title">Piece Title</div><div class="meta">Blender · Render</div></div>
-    </div>
-
-    <div class="render-card">
-      <div class="render-media"><span class="icon">◆</span>Add render</div>
-      <div class="render-cap"><div class="title">Piece Title</div><div class="meta">Blender · Animation Still</div></div>
+    <div class="col">
+      <h3>◆ Set 02</h3>
+      <div class="carousel">
+        <div class="render-card">
+          <div class="render-media"><span class="icon">◆</span>Add render</div>
+          <div class="render-cap"><div class="title">Piece Title</div><div class="meta">Blender · Scene</div></div>
+        </div>
+        <div class="render-card">
+          <div class="render-media"><span class="icon">◆</span>Add render</div>
+          <div class="render-cap"><div class="title">Piece Title</div><div class="meta">Blender · Render</div></div>
+        </div>
+        <div class="render-card">
+          <div class="render-media"><span class="icon">◆</span>Add render</div>
+          <div class="render-cap"><div class="title">Piece Title</div><div class="meta">Blender · Animation Still</div></div>
+        </div>
+      </div>
     </div>
 
   </div>

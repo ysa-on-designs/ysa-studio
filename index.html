@@ -166,18 +166,29 @@
   .subsection{margin-top:2.4rem;}
   .subsection h3{font-size:1.1rem; margin-bottom:1rem;}
   .carousel{
-    display:flex; gap:1rem; overflow-x:auto; padding-bottom:.6rem; scroll-snap-type:x mandatory;
-    -webkit-overflow-scrolling:touch;
-  }
+  display:flex; gap:1rem; overflow-x:auto; padding:.6rem .1rem; scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+}
   .carousel::-webkit-scrollbar{height:6px;}
   .carousel::-webkit-scrollbar-thumb{background:var(--mat-line-strong); border-radius:3px;}
   .carousel-item{
-    flex:0 0 190px; scroll-snap-align:start; aspect-ratio:4/5; border-radius:8px; overflow:hidden;
-    background:var(--mat-mid); border:1px solid var(--mat-line-strong); position:relative;
-    display:flex; align-items:center; justify-content:center; color:var(--cream-dim);
-    font-family:'JetBrains Mono',monospace; font-size:.72rem; text-align:center; padding:1rem;
-  }
+  flex:0 0 260px; scroll-snap-align:start; aspect-ratio:16/9; border-radius:4px; overflow:hidden;
+  background:var(--mat-mid); position:relative;
+  box-shadow:0 10px 28px -6px rgba(0,0,0,0.35);
+  transition:transform .4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow .4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.carousel-item:hover{transform:translateY(-6px) scale(1.015); box-shadow:0 8px 20px rgba(0,0,0,0.3);}
+.carousel-item img{width:100%; height:100%; object-fit:cover; display:block;}
+.carousel-item:hover{transform:translateY(-4px); box-shadow:0 10px 28px -6px rgba(0,0,0,0.35);}
+.carousel-item img{width:100%; height:100%; border-radius:4px; object-fit:cover; display:block;}
+
   .carousel-item img{width:100%; height:100%; object-fit:cover; display:block;}
+
+.carousel-item.placeholder{
+  display:flex; align-items:center; justify-content:center;
+  color:var(--cream-dim); font-family:'JetBrains Mono',monospace; font-size:.72rem; text-align:center;
+  padding:1rem;}
+
   .view-more{margin-top:1.1rem; display:inline-flex;}
   .t-item{position:relative; padding-bottom:2.6rem;}
   .t-item:last-child{padding-bottom:0;}
@@ -327,21 +338,20 @@
   <div class="subsection">
     <h3>Graphic Design</h3>
     <div class="carousel">
-      <div class="carousel-item">Add image</div>
-      <div class="carousel-item">Add image</div>
-      <div class="carousel-item">Add image</div>
-      <div class="carousel-item">Add image</div>
-    </div>
+  <div class="carousel-item placeholder">Add image</div>
+  <div class="carousel-item placeholder">Add image</div>
+  <div class="carousel-item placeholder">Add image</div>
+</div>
     <a class="btn btn-outline view-more" href="graphics.html">View More Projects →</a>
   </div>
 
   <div class="subsection">
-    <h3>3D &amp; Blender</h3>
+    <h3>Blender Projects</h3>
     <div class="carousel">
-      <div class="carousel-item">Add image</div>
-      <div class="carousel-item">Add image</div>
-      <div class="carousel-item">Add image</div>
-    </div>
+  <div class="carousel-item"><img src="Projects/CSH_FullOffice/CSH_OfficeRender_Day.png" alt="Chae Songhwa's Office Rendered"></div>
+  <div class="carousel-item"><img src="Projects/CSH_FullOffice/CSH_Scene1.png" alt="Hospital Playlist scene"></div>
+  <div class="carousel-item"><img src="Projects/CSH_FullOffice/CSH_Scene2.png" alt="Hospital Playlist scene"></div>
+</div>
     <a class="btn btn-outline view-more" href="blender.html">View More Projects →</a>
   </div>
 </section>
